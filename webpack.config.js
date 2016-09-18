@@ -16,7 +16,7 @@ module.exports = {
     },
     //入口文件输出配置
     output: {
-        path: 'dist/js/',
+        path: 'dist/page/',
         filename: '[name].js'
     },
     watch: true,
