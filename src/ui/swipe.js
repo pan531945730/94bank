@@ -1,4 +1,5 @@
 ;
+JSBK.Namespace.register('sq.ui');
 (function($, w) {
  w.Swipe = function(container, options) {
     var noop = function() {};
@@ -362,4 +363,4 @@
         }
     }
 }
-})(Zepto, window);
+})(Zepto, sq.ui);

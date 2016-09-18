@@ -4,12 +4,12 @@
     require('../common/layout.js');
     /*图片懒加载*/
     require('../ui/LazyLoadImg.js');
-    new LazyLoadImg({
+    new sq.ui.LazyLoadImg({
         select: '.imglazyload'
     });
     
     require('../ui/swipe.js');
-    new Swipe($('#swipe_wrap')[0],{
+    new sq.ui.Swipe($('#swipe_wrap')[0],{
           startSlide: 0,
           speed: 0,
           auto : 1000,

@@ -1,4 +1,5 @@
 ;
+JSBK.Namespace.register('sq.ui');
 (function($, w) {
 
     w.LazyLoadImg = function(opt) {
@@ -92,4 +93,4 @@
             }
         }
     };
-})(Zepto, window);
+})(Zepto, sq.ui);
