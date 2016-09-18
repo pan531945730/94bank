@@ -143,34 +143,6 @@
             return log(params);
         },
 
-        addLinkSoj: function(selector, attr, param) {
-            $('body').on('click', selector, function(e) {
-                //回退按钮不组织事件
-                $(this).attr('href').indexOf('history.back') < 0 && e.preventDefault();
-                e.stopPropagation();
-                var soj = $(this).data(attr || 'soj') || $(this).attr(attr || 'soj'), // 默认使用data，如果取不到，使用attr
-                    _soj = $.trim(soj), // 去空格
-                    href = $.trim($(this).attr('href')),
-                    _param = param || 'from'; // 默认是from
-
-                if (!href) { // 此处链接不做合法性检查
-                    return;
-                }
-                if (href.toLowerCase().indexOf('javascript') === 0) {
-                    return;
-                }
-                if (!_soj) { // 如果无soj,直接跳转
-                    location.href = href;
-                    return;
-                }
-                if (href.indexOf('?') !== -1) {
-                    location.href = href + '&' + _param + '=' + _soj;
-                } else {
-                    location.href = href + '?' + _param + '=' + _soj;
-                }
-            });
-        },
-        
         LocalStorageHelper: function(action, key, val) {
             try {
                 if (action == "setItem") {
@@ -201,6 +173,4 @@
 
     win.JSBK = jsbk;
     win.JS = jsbk.Utils;
-
-    JS.addLinkSoj('a'); // soj from 加码
 })(window, document, Zepto);
