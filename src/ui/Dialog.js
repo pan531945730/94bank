@@ -105,7 +105,7 @@ JSBK.Namespace.register('sq.ui');
             // 点击背景关闭
             if (this.ops.bgClose) {
                 div.click(function(event) { // 点击背景关闭
-                    if (event.targetNode === this) {
+                    if (event.target === this) {
                         event.stopPropagation();
                         _this.trigger('bgClose');
                         _this.close();

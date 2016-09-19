@@ -76,10 +76,7 @@
 
     require('../ui/Dialog.css');
     require('../ui/Alert.js');
-    var openAlert = new sq.ui.Alert();
-    $('.open-btn').on('click',function(){
-        openAlert.open();
-    })
+    var openAlert = new sq.ui.Alert({"targetNode" : ".open-btn"});
 
   });
 
