@@ -78,6 +78,12 @@
     require('../ui/Alert.js');
     var openAlert = new sq.ui.Alert({"targetNode" : ".open-btn"});
 
+    require('../ui/Confirm.js');
+    var openConfirm = new sq.ui.Confirm({"targetNode" : ".yield-info"});
+
+    require('../ui/Blink.js');
+    var openBlink = new sq.ui.Blink();
+    openBlink.open();
   });
 
 
