@@ -2,7 +2,7 @@
 <html lang="zh-cn">
 <head>
     <meta charset="utf-8">
-    <title>94bank 移动理财管家——首页</title>
+    <title>登录</title>
     <meta name="keywords" content="94bank,银行宝，银宝宝，理财产品，理财软件，掌上理财,p2p理财产品，理财产品商城，互联网理财">
     <meta name="description" content="94bank是移动理财管家,为用户提供最高25倍银行存款利息!1元起购!8道安全保障,100%本息保障!随用随取!好收益,就看94bank!" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,minimum-scale=1.0,user-scalable=no,minimal-ui"/>
@@ -16,17 +16,27 @@
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="http://img.94bank.com/public/app/touch-icon114.png?v=20160601" />
     <link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://img.94bank.com/public/app/touch-icon144.png?v=@{@WorkContext.Version}" />
     <link rel="shortcut icon" href="http://mp.94bank.com/favicon.ico?v=0b53de0092c64465479fe60efd21" type="image/x-icon">
-    <link rel="stylesheet" href="../dist/page/list.css">
+    <link rel="stylesheet" href="../dist/page/login.css">
 </head>
 <body>
-    <ul class="list-mod">
-      <li class="fir">1<p>    dfdds         sfdsf</p><p>ddddddddddddddddddddddddddddddddddddddd</p></li>
-      <li>2</li>
-      <li> sdfdsfsf<p>    4444444f        44444444</p></li>
-      <li>5<span>  dsfsfsfsdfdsf sdffffffffffffff</span></li>
-    </ul>
+    <div class="lg-cont">
+        <div class="lg-banner"></div>
+        <div class="lg-form">
+            <label>
+                <span class="lg-ico tel"></span>
+                <input type="tel" placeholder="请输入手机号码" value="" name="phone" maxlength="11" id="lg_tel">
+            </label>
+            <label>
+                <span class="lg-ico pwd"></span>
+                <input type="password" placeholder="请输入密码" value="" name="pass" id="lg_pwd">
+                <em class="lg-eyes"></em>
+            </label>
+        </div>
+        <a href="javascript:void(0);" class="lg-btn">登录</a>
+        <p class="log-tip">还没有账号？现在去<a href="#">免费注册</a></p>
+    </div>
     <script type="text/javascript" src="../src/common/zepto.min.js"></script>
     <script type="text/javascript" src="../dist/page/common.js"></script>
-    <script type="text/javascript" src="../dist/page/list.js"></script>
+    <script type="text/javascript" src="../dist/page/login.js"></script>
 </body>
 </html>

@@ -12,7 +12,9 @@ module.exports = {
     //页面入口文件配置
     entry: {
         home: './src/js/home.js',
-        list: './src/js/list.js'
+        list: './src/js/list.js',
+        login: './src/js/login.js',
+        regist: './src/js/regist.js'
     },
     //入口文件输出配置
     output: {

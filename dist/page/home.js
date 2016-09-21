@@ -1,1 +1,1145 @@
-webpackJsonp([1],[function(t,n,e){$(function(){function t(){var t=$("#yield_bg").get(0),n=t.getContext("2d");n.fillStyle="#fff",n.fillRect(0,0,320,160),n.beginPath(),n.arc(25,13,8.5,0,2*Math.PI,!0),n.closePath(),n.fillStyle="rgba(246, 106, 106, 0.2)",n.fill(),n.beginPath(),n.arc(63,90,33.5,0,2*Math.PI,!0),n.closePath(),n.fillStyle="rgba(246, 106, 106, 0.2)",n.fill(),n.beginPath(),n.arc(145,59,59,0,2*Math.PI,!0),n.closePath(),n.fillStyle="rgba(246, 106, 106, 0.2)",n.fill(),n.beginPath(),n.arc(156,62,62,0,2*Math.PI,!0),n.closePath(),n.fillStyle="rgba(246, 106, 106, 0.1)",n.fill(),n.beginPath(),n.arc(240,5,4.5,0,2*Math.PI,!0),n.closePath(),n.fillStyle="rgba(246, 106, 106, 0.2)",n.fill(),n.beginPath(),n.arc(243,75,19,0,2*Math.PI,!0),n.closePath(),n.fillStyle="rgba(246, 106, 106, 0.2)",n.fill(),n.beginPath(),n.arc(293,113,7.2,0,2*Math.PI,!0),n.closePath(),n.fillStyle="rgba(246, 106, 106, 0.2)",n.fill()}e(2),e(3),e(6),e(10),new sq.ui.LazyLoadImg({select:".imglazyload"}),e(11),new sq.ui.Swipe($("#swipe_wrap")[0],{startSlide:0,speed:0,auto:1e3,continuous:!0,disableScroll:!1,stopPropagation:!1,callback:function(t,n){var e=$("#pnav").find("li");$(e[t]).addClass("focus").siblings().removeClass("focus")}}),t(),e(5),e(7);new sq.ui.Alert({targetNode:".open-btn"});e(9);new sq.ui.Confirm({targetNode:".yield-info"});e(8);var n=new sq.ui.Blink;n.open()})},function(t,n){JSBK.Namespace.register("sq.ui"),function(t,n){function e(n){t.extend(!0,n,i)}var i={listener:{defaults:[]},on:function(t,n,e){var i,o;"string"!=typeof t&&"undefined"!=typeof t||"function"!=typeof n&&"function"!=typeof e[n]||(i=t||"defaults",o="function"==typeof n?n:e[n],"undefined"==typeof this.listener[i]&&(this.listener[i]=[]),this.listener[i].push({fn:o,context:e||this}))},off:function(t,n,e){var i,o=t||"defaults",s=this.listener[o],a=e||this,r=s?s.length:0;for(i=0;i<r;i++)s[i].fn===n&&s[i].context===a&&s.splice(i,1)},trigger:function(n,e){var i,o,s=n||"defaults",a=this.listener[s],r=a?a.length:0;for(t.isArray(e)||(o=e?[e]:[]),i=0;i<r;i++)a[i].fn.apply(a[i].context,o)}};n.Dialog=function(n){var i={className:"g-d-dialog",actionEvent:"click",bgClose:!1,targetNode:""};this.ops=t.extend(i,n),this.dom={},e(this),this.init()},n.Dialog.prototype={constructor:n.Dialog,init:function(){var n,e=t(document.createDocumentFragment()),i=this,o=t("<div></div>");o.addClass(this.ops.className),e.append(o),this.ops.select&&(n=t(this.ops.select)),o.append(n||""),t("body").append(e),this.dom.dialog=o,this.dom.dialog.on("touchmove",function(t){t.preventDefault()}),t(this.ops.closeSelect).click(function(t){t.stopPropagation(),i.trigger("dialogClose"),i.close()}),this.ops.bgClose&&o.click(function(t){t.target===this&&(t.stopPropagation(),i.trigger("bgClose"),i.close())}),o.find("input").blur(function(t){t.stopPropagation(),i.fixDrawSlow()}),this.ops.targetNode&&t(this.ops.targetNode).on(this.ops.actionEvent,function(t){t.stopPropagation();var n=[].slice.call(arguments);i.open(n.slice(1))})},open:function(t){this.trigger("open",t),this.dom.dialog.css("display","-webkit-box"),this.trigger("afteropen",t)},close:function(t){this.dom.dialog.hide(),this.trigger("close",t)},getDialog:function(){return this.dom.dialog},fixDrawSlow:function(){var n=t(window).scrollTop();setTimeout(function(){t(window).scrollTop(n+1),setTimeout(function(){t(window).scrollTop(n)},10)},1)}}}(Zepto,sq.ui)},function(t,n){},function(t,n){},,function(t,n){},function(t,n){!function(t,n,e){function o(t){var n,e=[];if("string"==typeof t&&(msg=t),"object"==typeof t){for(n in t)t.hasOwnProperty(n)&&e.push(n+":"+encodeURIComponent(JSON.stringify(t[n])));msg=e.join(",")}return!0}function s(t){t.preventDefault()}var a=t.JSBK||{};t.onerror=function(t,n,e){o({message:t,url:n,line:e})},a.Namespace={register:function(n){var e,i,o=n.split("."),s=t;for(i=0,e=o.length;i<e;i++)"undefined"==typeof s[o[i]]&&(s[o[i]]={}),s=s[o[i]];return s}},a.Utils={setCookie:function(t,e,i,o,s,a){var r=new Date;r.setTime(r.getTime()),i&&(i=1e3*i*60*60*24);var l=new Date(r.getTime()+i);n.cookie=t+"="+escape(e)+(i?";expires="+l.toGMTString():"")+(o?";path="+o:"")+(s?";domain="+s:"")+(a?";secure":"")},getCookie:function(t){var e,o=n.cookie.split(";"),s="",a="",r="",l=!1;for(i=0,e=o.length;i<e;i++){if(s=o[i].split("="),a=s[0].replace(/^\s+|\s+$/g,""),a==t)return l=!0,s.length>1&&(r=decodeURIComponent(s[1].replace(/^\s+|\s+$/g,""))),r;s=null,a=""}if(!l)return null},deleteCookie:function(t,e,i){this.getCookie(t)&&(n.cookie=t+"="+(e?";path="+e:"")+(i?";domain="+i:"")+";expires=Thu, 01-Jan-1970 00:00:01 GMT")},touchClick:function(){var t=!0;e(n).on("touchmove",function(){t&&(n.addEventListener("click",s,!0),t=!1)}),e(n).on("touchend",function(){n.removeEventListener("click",s,!0),t=!0})},log:function(t){return o(t)},LocalStorageHelper:function(t,n,e){try{if("setItem"==t)return localStorage[t](n,e),!0;var i=localStorage[t](n);return i}catch(o){return!1}},scrollHelper:function(t){var n={};e("body").on("touchstart",t,function(t){n.startTop=t.targetTouches[0].screenY,n.startScrollTop=e(this).scrollTop()}),e("body").on("touchmove",t,function(t){t.preventDefault();var i=t.targetTouches[0].screenY;e(this).scrollTop(n.startScrollTop+n.startTop-i)})}},t.JSBK=a,t.JS=a.Utils}(window,document,Zepto)},function(t,n,e){JSBK.Namespace.register("sq.ui"),function(t,n){n.Alert=function(n){var e=this,i={centerTitle:!1,bgClose:!1,titleHtml:"成功！",btnHtml:"确定",select:e.getSelect(),clickBtnCallback:null};this.ops=t.extend(i,n),this.dialog=null,this.init()},n.Alert.prototype.init=function(){var t=this;t.setHtml(),e(1),t.dialog=new sq.ui.Dialog(t.ops),t.bindEvent()},n.Alert.prototype.open=function(){this.dialog.open()},n.Alert.prototype.bindEvent=function(){var t=this;t.ops.select.on("click",".btn",function(n){n.stopPropagation(),t.ops.clickBtnCallback?t.ops.clickBtnCallback(t):t.dialog.close()})},n.Alert.prototype.setHtml=function(){var t=this;t.ops.centerTitle&&t.ops.select.addClass("center-title"),t.ops.select.find(".title").html(t.ops.titleHtml),t.ops.select.find(".btn").html(t.ops.btnHtml)},n.Alert.prototype.getSelect=function(){return t('<div class="dialog-mod dialog-alert"><p class="title"></p><div class="btn-wrap"><span class="btn"></span></div></div>')}}(Zepto,sq.ui)},function(t,n,e){JSBK.Namespace.register("sq.ui"),function(t,n){n.Blink=function(n){var e=this,i={className:"g-d-dialog blink-mod",bgClose:!1,select:e.getSelect(),blinkHtml:"blink blink",intervaltime:3e3};this.ops=t.extend(i,n),this.dialog=null,this.init()},n.Blink.prototype.init=function(){var t=this;t.setHtml(),e(1),t.dialog=new sq.ui.Dialog(t.ops)},n.Blink.prototype.open=function(t){var n=this;n.dialog.open(),setTimeout(function(){n.ops.timeoutCallback?n.ops.timeoutCallback(n):(n.dialog.close(),t&&t())},n.ops.intervaltime)},n.Blink.prototype.setHtml=function(){var t=this;t.ops.select.find(".blink-content").html(t.ops.blinkHtml)},n.Blink.prototype.setDoc=function(t){var n=this;n.dialog.dom.dialog.find(".blink-content").empty().append(t)},n.Blink.prototype.getSelect=function(){return t('<div class="dialog-mod dialog-blink"><p class="blink-content"></p></div>')}}(Zepto,sq.ui)},function(t,n,e){JSBK.Namespace.register("sq.ui"),function(t,n){n.Confirm=function(n){var e=this,i={bgClose:!1,titleHtml:"确定？",cancleBtnHtml:"取消",confirmBtnHtml:"确定",select:e.getSelect(),cancleCallback:null,confirmCallback:null};this.ops=t.extend(i,n),this.dialog=null,this.init()},n.Confirm.prototype.init=function(){var t=this;t.setHtml(),e(1),t.dialog=new sq.ui.Dialog(t.ops),t.bindEvent()},n.Confirm.prototype.open=function(){this.dialog.open()},n.Confirm.prototype.bindEvent=function(){var t=this;t.ops.select.on("click",".cancle-btn",function(n){n.stopPropagation(),t.ops.cancleCallback?t.ops.cancleCallback(t):t.dialog.close()}),t.ops.select.on("click",".confirm-btn",function(n){n.stopPropagation(),t.ops.confirmCallback?t.ops.confirmCallback(t):t.dialog.close()})},n.Confirm.prototype.setHtml=function(){var t=this;t.ops.select.find(".title").html(t.ops.titleHtml),t.ops.select.find(".cancle-btn").html(t.ops.cancleBtnHtml),t.ops.select.find(".confirm-btn").html(t.ops.confirmBtnHtml)},n.Confirm.prototype.getSelect=function(){return t('<div class="dialog-mod dialog-confirm"><p class="title"></p><div class="btn-wrap"><span class="btn cancle-btn"></span><span class="btn confirm-btn"></span></div></div>')}}(Zepto,sq.ui)},function(t,n){JSBK.Namespace.register("sq.ui"),function(t,n){n.LazyLoadImg=function(n){var e={min:0,max:-1,select:"img",attr:"data-src",ratioAttr:"origin",isClip:!1,imgRange:1};this.ops={},t.extend(this.ops,e,n),this.init()},n.LazyLoadImg.prototype={constructor:n.LazyLoadImg,init:function(){function n(){var n=t(window),e=i.ops.min,s=i.ops.max,a=n.height(),r=n.scrollTop();i.ops.min<r&&(e=r),(i.ops.max===-1||a*i.ops.imgRange+r<i.ops.max)&&(s=a*i.ops.imgRange+r),i.refreshImg(e,s),o=!1}function e(){o!==!0&&(o=!0,rAf(n))}var i=this,o=!1;rAf=window.requestAnimationFrame||window.webkitRequestAnimationFrame||function(t){window.setTimeout(t,1e3/60)},t(window).scroll(e),t(document).on("touchmove",e),t(window).trigger("scroll")},refreshImg:function(n,e){var i,o,s=this;i=this.ops.select.replace(".",""),t(this.ops.select).each(function(a,r){var l=t(r);o=l.offset().top,o>=n&&o<=e&&(s.imgReplace(l,s.ops.attr,s.ops.ratioAttr,s.ops.isClip),l.removeClass(i))})},imgReplace:function(t,n,e,i){var o,s=n||"data-src",a=t.attr(s);a&&a&&(o=new Image,o.onerror=function(){return!1},o.onload=function(){t.attr("src",a)},o.src=a)}}}(Zepto,sq.ui)},function(t,n){JSBK.Namespace.register("sq.ui"),function(t,n){n.Swipe=function(t,n){function e(){g=w.children,b=g.length,g.length<2&&(n.continuous=!1),h.transitions&&n.continuous&&g.length<3&&(w.appendChild(g[0].cloneNode(!0)),w.appendChild(w.children[1].cloneNode(!0)),g=w.children),m=new Array(g.length),v=t.getBoundingClientRect().width||t.offsetWidth,w.style.width=g.length*v+"px";for(var e=g.length;e--;){var i=g[e];i.style.width=v+"px",i.setAttribute("data-index",e),h.transitions&&(i.style.left=e*-v+"px",r(e,y>e?-v:y<e?v:0,0))}n.continuous&&h.transitions&&(r(s(y-1),-v,0),r(s(y+1),v,0)),h.transitions||(w.style.left=y*-v+"px"),t.style.visibility="visible"}function i(){n.continuous?a(y-1):y&&a(y-1)}function o(){n.continuous?a(y+1):y<g.length-1&&a(y+1)}function s(t){return(g.length+t%g.length)%g.length}function a(t,e){if(y!=t){if(h.transitions){var i=Math.abs(y-t)/(y-t);if(n.continuous){var o=i;i=-m[s(t)]/v,i!==o&&(t=-i*g.length+t)}for(var a=Math.abs(y-t)-1;a--;)r(s((t>y?t:y)-a-1),v*i,0);t=s(t),r(y,v*i,e||k),r(t,0,e||k),n.continuous&&r(s(t-i),-(v*i),0)}else t=s(t),c(y*-v,t*-v,e||k);y=t,d(n.callback&&n.callback(y,g[y]))}}function r(t,n,e){l(t,n,e),m[t]=n}function l(t,n,e){var i=g[t],o=i&&i.style;o&&(o.webkitTransitionDuration=o.MozTransitionDuration=o.msTransitionDuration=o.OTransitionDuration=o.transitionDuration=e+"ms",o.webkitTransform="translate("+n+"px,0)translateZ(0)",o.msTransform=o.MozTransform=o.OTransform="translateX("+n+"px)")}function c(t,e,i){if(!i)return void(w.style.left=e+"px");var o=+new Date,s=setInterval(function(){var a=+new Date-o;return a>i?(w.style.left=e+"px",E&&u(),n.transitionEnd&&n.transitionEnd.call(event,y,g[y]),void clearInterval(s)):void(w.style.left=(e-t)*(Math.floor(a/i*100)/100)+t+"px")},4)}function u(){x=setTimeout(o,E)}function p(){E=0,clearTimeout(x)}var f=function(){},d=function(t){setTimeout(t||f,0)},h={addEventListener:!!window.addEventListener,touch:"ontouchstart"in window||window.DocumentTouch&&document instanceof DocumentTouch,transitions:function(t){var n=["transitionProperty","WebkitTransition","MozTransition","OTransition","msTransition"];for(var e in n)if(void 0!==t.style[n[e]])return!0;return!1}(document.createElement("swipe"))};if(t){var g,m,v,b,w=t.children[0];n=n||{};var y=parseInt(n.startSlide,10)||0,k=n.speed||300;n.continuous=void 0===n.continuous||n.continuous;var x,T,E=n.auto||0,C={},S={},P={handleEvent:function(t){switch(t.type){case"touchstart":this.start(t);break;case"touchmove":this.move(t);break;case"touchend":d(this.end(t));break;case"webkitTransitionEnd":case"msTransitionEnd":case"oTransitionEnd":case"otransitionend":case"transitionend":d(this.transitionEnd(t));break;case"resize":d(e.call())}n.stopPropagation&&t.stopPropagation()},start:function(t){var n=t.touches[0];C={x:n.pageX,y:n.pageY,time:+new Date},T=void 0,S={},w.addEventListener("touchmove",this,!1),w.addEventListener("touchend",this,!1)},move:function(t){if(!(t.touches.length>1||t.scale&&1!==t.scale)){n.disableScroll&&t.preventDefault();var e=t.touches[0];S={x:e.pageX-C.x,y:e.pageY-C.y},"undefined"==typeof T&&(T=!!(T||Math.abs(S.x)<Math.abs(S.y))),T||(t.preventDefault(),p(),n.continuous?(l(s(y-1),S.x+m[s(y-1)],0),l(y,S.x+m[y],0),l(s(y+1),S.x+m[s(y+1)],0)):(S.x=S.x/(!y&&S.x>0||y==g.length-1&&S.x<0?Math.abs(S.x)/v+1:1),l(y-1,S.x+m[y-1],0),l(y,S.x+m[y],0),l(y+1,S.x+m[y+1],0)))}},end:function(t){var e=+new Date-C.time,i=Number(e)<250&&Math.abs(S.x)>20||Math.abs(S.x)>v/2,o=!y&&S.x>0||y==g.length-1&&S.x<0;n.continuous&&(o=!1);var a=S.x<0;T||(i&&!o?(a?(n.continuous?(r(s(y-1),-v,0),r(s(y+2),v,0)):r(y-1,-v,0),r(y,m[y]-v,k),r(s(y+1),m[s(y+1)]-v,k),y=s(y+1)):(n.continuous?(r(s(y+1),v,0),r(s(y-2),-v,0)):r(y+1,v,0),r(y,m[y]+v,k),r(s(y-1),m[s(y-1)]+v,k),y=s(y-1)),n.callback&&n.callback(y,g[y])):n.continuous?(r(s(y-1),-v,k),r(y,0,k),r(s(y+1),v,k)):(r(y-1,-v,k),r(y,0,k),r(y+1,v,k))),w.removeEventListener("touchmove",P,!1),w.removeEventListener("touchend",P,!1)},transitionEnd:function(t){parseInt(t.target.getAttribute("data-index"),10)==y&&(E&&u(),n.transitionEnd&&n.transitionEnd.call(t,y,g[y]))}};return e(),E&&u(),h.addEventListener?(h.touch&&w.addEventListener("touchstart",P,!1),h.transitions&&(w.addEventListener("webkitTransitionEnd",P,!1),w.addEventListener("msTransitionEnd",P,!1),w.addEventListener("oTransitionEnd",P,!1),w.addEventListener("otransitionend",P,!1),w.addEventListener("transitionend",P,!1)),window.addEventListener("resize",P,!1)):window.onresize=function(){e()},{setup:function(){e()},slide:function(t,n){p(),a(t,n)},prev:function(){p(),i()},next:function(){p(),o()},getPos:function(){return y},getNumSlides:function(){return b},kill:function(){p(),w.style.width="auto",w.style.left=0;for(var t=g.length;t--;){var n=g[t];n.style.width="100%",n.style.left=0,h.transitions&&l(t,0,0)}h.addEventListener?(w.removeEventListener("touchstart",P,!1),w.removeEventListener("webkitTransitionEnd",P,!1),w.removeEventListener("msTransitionEnd",P,!1),w.removeEventListener("oTransitionEnd",P,!1),w.removeEventListener("otransitionend",P,!1),w.removeEventListener("transitionend",P,!1),window.removeEventListener("resize",P,!1)):window.onresize=null}}}}}(Zepto,sq.ui)}]);
+webpackJsonp([0,4],[
+/* 0 */
+/***/ function(module, exports, __webpack_require__) {
+
+	;$(function(){
+	    __webpack_require__(1);
+	    __webpack_require__(5);
+	    __webpack_require__(7);
+	    /*图片懒加载*/
+	    __webpack_require__(8);
+	    new sq.ui.LazyLoadImg({
+	        select: '.imglazyload'
+	    });
+	    
+	    __webpack_require__(9);
+	    new sq.ui.Swipe($('#swipe_wrap')[0],{
+	          startSlide: 0,
+	          speed: 0,
+	          auto : 1000,
+	          continuous: true,
+	          disableScroll: false,
+	          stopPropagation: false,
+	          callback: function(index, elem) {
+	              var dotList = $('#pnav').find('li');
+	              $(dotList[index]).addClass('focus').siblings().removeClass('focus');
+	          }
+	      });
+
+	    function buildYieldBg() {
+	        var canvas = $('#yield_bg').get(0); 
+	        var content = canvas.getContext('2d');//取得图形上下文 graphics context 
+	        
+	        content.fillStyle = '#fff';//填充canvas的背景颜色 
+	        content.fillRect(0, 0, 320, 160);//参数分别表示 x轴,y轴,宽度,高度 
+	        
+	        content.beginPath();//创建路径 
+	        content.arc(25, 13, 8.5, 0, Math.PI * 2, true);//绘制图形 
+	        content.closePath();//关闭路径 
+	        content.fillStyle = 'rgba(246, 106, 106, 0.2)';//设置样式 
+	        content.fill();//填充 
+
+	        content.beginPath();
+	        content.arc(63,90, 33.5, 0, Math.PI * 2, true);
+	        content.closePath();
+	        content.fillStyle = 'rgba(246, 106, 106, 0.2)';
+	        content.fill();
+
+	        content.beginPath();
+	        content.arc(145,59, 59, 0, Math.PI * 2, true);
+	        content.closePath();
+	        content.fillStyle = 'rgba(246, 106, 106, 0.2)';
+	        content.fill();
+
+	        content.beginPath();
+	        content.arc(156,62, 62, 0, Math.PI * 2, true);
+	        content.closePath();
+	        content.fillStyle = 'rgba(246, 106, 106, 0.1)';
+	        content.fill();
+
+	        content.beginPath();
+	        content.arc(240, 5, 4.5, 0, Math.PI * 2, true);
+	        content.closePath();
+	        content.fillStyle = 'rgba(246, 106, 106, 0.2)';
+	        content.fill();
+
+	        content.beginPath();
+	        content.arc(243, 75, 19, 0, Math.PI * 2, true);
+	        content.closePath();
+	        content.fillStyle = 'rgba(246, 106, 106, 0.2)';
+	        content.fill();
+
+	        content.beginPath();
+	        content.arc(293, 113, 7.2, 0, Math.PI * 2, true);
+	        content.closePath();
+	        content.fillStyle = 'rgba(246, 106, 106, 0.2)';
+	        content.fill();
+	    }
+
+	    buildYieldBg();
+
+	    __webpack_require__(10);
+	    __webpack_require__(12);
+	    var openAlert = new sq.ui.Alert({"targetNode" : ".open-btn"});
+
+	    __webpack_require__(14);
+	    var openConfirm = new sq.ui.Confirm({"targetNode" : ".yield-info"});
+
+	    __webpack_require__(15);
+	    var openBlink = new sq.ui.Blink();
+	    openBlink.open();
+	  });
+
+
+	  
+
+/***/ },
+/* 1 */
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
+
+/***/ },
+/* 2 */,
+/* 3 */,
+/* 4 */,
+/* 5 */
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
+
+/***/ },
+/* 6 */,
+/* 7 */
+/***/ function(module, exports) {
+
+	;
+	(function(win, doc, $) {
+
+	    var jsbk = win.JSBK || {};
+
+	    function log(params) {
+	        var key,
+	            arr = [];
+	        if (typeof params === 'string') {
+	            msg = params;
+	        }
+	        if (typeof params === 'object') {
+	            for (key in params) {
+	                if (params.hasOwnProperty(key)) {
+	                    arr.push(key + ':' + encodeURIComponent(JSON.stringify(params[key])));
+	                }
+	            }
+	            msg = arr.join(',');
+	        }
+	        return true;
+	    }
+
+	    win.onerror = function(msg, url, line) {
+	        log({
+	            message: msg,
+	            url: url,
+	            line: line
+	        });
+	    }
+
+	    function preventDefault(event) {
+	        event.preventDefault();
+	    }
+
+	    jsbk.Namespace = {
+	        register: function(ns) {
+	            var nsParts = ns.split("."),
+	                root = win,
+	                length,
+	                i;
+	            for (i = 0, length = nsParts.length; i < length; i++) {
+	                if (typeof root[nsParts[i]] == "undefined") {
+	                    root[nsParts[i]] = {};
+	                }
+	                root = root[nsParts[i]];
+	            }
+	            return root;
+	        }
+	    };
+
+	    jsbk.Utils = {
+
+	        // http://techpatterns.com/downloads/javascript_cookies.php
+	        setCookie: function(name, value, expires, path, domain, secure) {
+	            // set time, it's in milliseconds
+	            var today = new Date();
+	            today.setTime(today.getTime());
+	            /*
+	                if the expires variable is set, make the correct
+	                expires time, the current script below will set
+	                it for x number of days, to make it for hours,
+	                delete * 24, for minutes, delete * 60 * 24
+	            */
+	            if (expires) {
+	                expires = expires * 1000 * 60 * 60 * 24;
+	            }
+	            var expires_date = new Date(today.getTime() + (expires));
+
+	            doc.cookie = name + "=" + escape(value) +
+	                ((expires) ? ";expires=" + expires_date.toGMTString() : "") +
+	                ((path) ? ";path=" + path : "") +
+	                ((domain) ? ";domain=" + domain : "") +
+	                ((secure) ? ";secure" : "");
+	        },
+
+	        // this fixes an issue with the old method, ambiguous values
+	        // with this test document.cookie.indexOf( name + "=" );
+	        getCookie: function(check_name) {
+	            // first we'll split this cookie up into name/value pairs
+	            // note: document.cookie only returns name=value, not the other components
+	            var a_all_cookies = doc.cookie.split(';'),
+	                a_temp_cookie = '',
+	                cookie_name = '',
+	                cookie_value = '',
+	                length,
+	                b_cookie_found = false; // set boolean t/f default f
+
+	            for (i = 0, length = a_all_cookies.length; i < length; i++) {
+	                // now we'll split apart each name=value pair
+	                a_temp_cookie = a_all_cookies[i].split('=');
+	                // and trim left/right whitespace while we're at it
+	                cookie_name = a_temp_cookie[0].replace(/^\s+|\s+$/g, '');
+
+	                // if the extracted name matches passed check_name
+	                if (cookie_name == check_name) {
+	                    b_cookie_found = true;
+	                    // we need to handle case where cookie has no value but exists (no = sign, that is):
+	                    if (a_temp_cookie.length > 1) {
+	                        cookie_value = decodeURIComponent(a_temp_cookie[1].replace(/^\s+|\s+$/g, ''));
+	                    }
+	                    // note that in cases where cookie is initialized but no value, null is returned
+	                    return cookie_value;
+	                    break;
+	                }
+	                a_temp_cookie = null;
+	                cookie_name = '';
+	            }
+	            if (!b_cookie_found) {
+	                return null;
+	            }
+	        },
+
+	        // this deletes the cookie when called
+	        deleteCookie: function(name, path, domain) {
+	            if (this.getCookie(name)) {
+	                doc.cookie = name + "=" +
+	                    ((path) ? ";path=" + path : "") +
+	                    ((domain) ? ";domain=" + domain : "") + ";expires=Thu, 01-Jan-1970 00:00:01 GMT";
+	            }
+	        },
+
+	        touchClick: function() {
+	            var status = true;
+	            $(doc).on('touchmove', function() {
+	                if (status) {
+	                    doc.addEventListener('click', preventDefault, true);
+	                    status = false;
+	                }
+	            });
+
+	            $(doc).on('touchend', function() {
+	                doc.removeEventListener('click', preventDefault, true);
+	                status = true;
+	            });
+	        },
+	        
+	        /**
+	         * [getGuid 在统计电话时长的时候为了保持唯一关联性，防止用户间隔时间长或者清除cookie后两个soj无法关联起来]
+	         * @param  {[String]} sType
+	         * @return {[String]}
+	         */
+	        log: function(params) {
+	            return log(params);
+	        },
+
+	        LocalStorageHelper: function(action, key, val) {
+	            try {
+	                if (action == "setItem") {
+	                    localStorage[action](key, val);
+	                    return true;
+	                } else {
+	                    var result = localStorage[action](key);
+	                    return result;
+	                }
+	            } catch (e) {
+	                return false;
+	            }
+	        },
+	        //替代原生scroll事件
+	        scrollHelper: function(selector){
+	            var record = {};
+	            $('body').on("touchstart", selector, function(e) {
+	                record.startTop = e.targetTouches[0].screenY; // 触摸开始时触摸点的位置
+	                record.startScrollTop = $(this).scrollTop();  // 触摸开始时内div的scrollTop
+	            });
+	            $('body').on("touchmove", selector, function(e) {
+	                e.preventDefault();
+	                var curY = e.targetTouches[0].screenY;
+	                $(this).scrollTop( record.startScrollTop + record.startTop - curY ); // js控制滚动
+	            });
+	        }
+	    };
+
+	    win.JSBK = jsbk;
+	    win.JS = jsbk.Utils;
+	})(window, document, Zepto);
+
+
+/***/ },
+/* 8 */
+/***/ function(module, exports) {
+
+	;
+	JSBK.Namespace.register('sq.ui');
+	(function($, w) {
+
+	    w.LazyLoadImg = function(opt) {
+	        var defaults = {
+	            min: 0,
+	            max: -1,
+	            select: 'img',
+	            attr: 'data-src',
+	            ratioAttr: 'origin',
+	            isClip: false,
+	            imgRange: 1
+	        };
+	        this.ops = {};
+	        $.extend(this.ops, defaults, opt);
+	        this.init();
+	    };
+	    w.LazyLoadImg.prototype = {
+	        constructor: w.LazyLoadImg,
+	        init: function() {
+	            var _this = this,
+	                rafStatus = false;
+
+	            // 使用raf代码scoll和touchmove
+	            rAf = window.requestAnimationFrame || window.webkitRequestAnimationFrame || function(callback) {
+	                window.setTimeout(callback, 1000 / 60);
+	            };
+
+	            function imgHander() {
+	                var $window = $(window),
+	                    min = _this.ops.min,
+	                    max = _this.ops.max,
+	                    wheight = $window.height(),
+	                    scrolltop = $window.scrollTop();
+	                if (_this.ops.min < scrolltop) {
+	                    min = scrolltop;
+	                }
+	                if (_this.ops.max === -1 || wheight * _this.ops.imgRange + scrolltop < _this.ops.max) {
+	                    max = wheight * _this.ops.imgRange + scrolltop;
+	                }
+	                _this.refreshImg(min, max);
+	                rafStatus = false;
+	            }
+
+	            function scrollHander() {
+	                if (rafStatus === true) {
+	                    return;
+	                }
+	                rafStatus = true;
+	                rAf(imgHander);
+	            }
+	            $(window).scroll(scrollHander);
+	            $(document).on('touchmove', scrollHander);
+	            // rAf(imgHander);
+	            $(window).trigger('scroll');
+	        },
+	        refreshImg: function(min, max) {
+	            var _this = this,
+	                style,
+	                top;
+	            style = this.ops.select.replace('.', '');
+	            $(this.ops.select).each(function(index, el) {
+	                var $this = $(el);
+	                top = $this.offset().top;
+	                if (top >= min && top <= max) {
+	                    _this.imgReplace($this, _this.ops.attr, _this.ops.ratioAttr, _this.ops.isClip);
+	                    $this.removeClass(style);
+	                }
+	            });
+	        },
+	        imgReplace: function(dom, attr, ratioAttr, isClip) {
+	            var _this = this,
+	                attrName = attr || 'data-src',
+	                url = dom.attr(attrName),
+	                img;
+	            if (!url) {
+	                return;
+	            }
+	            if (url) {
+	                img = new Image();
+	                img.onerror = function() {
+	                    // dom.removeAttr('data-src');
+	                    return false;
+	                };
+	                
+	                img.onload = function() {
+	                    // dom.removeAttr('data-src');
+	                    dom.attr('src', url);
+	                };
+
+	                img.src = url;
+	            }
+	        }
+	    };
+	})(Zepto, sq.ui);
+
+/***/ },
+/* 9 */
+/***/ function(module, exports) {
+
+	;
+	JSBK.Namespace.register('sq.ui');
+	(function($, w) {
+	 w.Swipe = function(container, options) {
+	    var noop = function() {};
+	    var offloadFn = function(fn) {
+	        setTimeout(fn || noop, 0)
+	    };
+	    var browser = {
+	        addEventListener: !!window.addEventListener,
+	        touch: ("ontouchstart" in window) || window.DocumentTouch && document instanceof DocumentTouch,
+	        transitions: (function(temp) {
+	            var props = ["transitionProperty", "WebkitTransition", "MozTransition", "OTransition", "msTransition"];
+	            for (var i in props) {
+	                if (temp.style[props[i]] !== undefined) {
+	                    return true
+	                }
+	            }
+	            return false
+	        })(document.createElement("swipe"))
+	    };
+	    if (!container) {
+	        return
+	    }
+	    var element = container.children[0];
+	    var slides, slidePos, width, length;
+	    options = options || {};
+	    var index = parseInt(options.startSlide, 10) || 0;
+	    var speed = options.speed || 300;
+	    options.continuous = options.continuous !== undefined ? options.continuous : true;
+
+	    function setup() {
+	        slides = element.children;
+	        length = slides.length;
+	        if (slides.length < 2) {
+	            options.continuous = false
+	        }
+	        if (browser.transitions && options.continuous && slides.length < 3) {
+	            element.appendChild(slides[0].cloneNode(true));
+	            element.appendChild(element.children[1].cloneNode(true));
+	            slides = element.children
+	        }
+	        slidePos = new Array(slides.length);
+	        width = container.getBoundingClientRect().width || container.offsetWidth;
+	        element.style.width = (slides.length * width) + "px";
+	        var pos = slides.length;
+	        while (pos--) {
+	            var slide = slides[pos];
+	            slide.style.width = width + "px";
+	            slide.setAttribute("data-index", pos);
+	            if (browser.transitions) {
+	                slide.style.left = (pos * -width) + "px";
+	                move(pos, index > pos ? -width : (index < pos ? width : 0), 0)
+	            }
+	        }
+	        if (options.continuous && browser.transitions) {
+	            move(circle(index - 1), -width, 0);
+	            move(circle(index + 1), width, 0)
+	        }
+	        if (!browser.transitions) {
+	            element.style.left = (index * -width) + "px"
+	        }
+	        container.style.visibility = "visible"
+	    }
+
+	    function prev() {
+	        if (options.continuous) {
+	            slide(index - 1)
+	        } else {
+	            if (index) {
+	                slide(index - 1)
+	            }
+	        }
+	    }
+
+	    function next() {
+	        if (options.continuous) {
+	            slide(index + 1)
+	        } else {
+	            if (index < slides.length - 1) {
+	                slide(index + 1)
+	            }
+	        }
+	    }
+
+	    function circle(index) {
+	        return (slides.length + (index % slides.length)) % slides.length
+	    }
+
+	    function slide(to, slideSpeed) {
+	        if (index == to) {
+	            return
+	        }
+	        if (browser.transitions) {
+	            var direction = Math.abs(index - to) / (index - to);
+	            if (options.continuous) {
+	                var natural_direction = direction;
+	                direction = -slidePos[circle(to)] / width;
+	                if (direction !== natural_direction) {
+	                    to = -direction * slides.length + to
+	                }
+	            }
+	            var diff = Math.abs(index - to) - 1;
+	            while (diff--) {
+	                move(circle((to > index ? to : index) - diff - 1), width * direction, 0)
+	            }
+	            to = circle(to);
+	            move(index, width * direction, slideSpeed || speed);
+	            move(to, 0, slideSpeed || speed);
+	            if (options.continuous) {
+	                move(circle(to - direction), -(width * direction), 0)
+	            }
+	        } else {
+	            to = circle(to);
+	            animate(index * -width, to * -width, slideSpeed || speed)
+	        }
+	        index = to;
+	        offloadFn(options.callback && options.callback(index, slides[index]))
+	    }
+
+	    function move(index, dist, speed) {
+	        translate(index, dist, speed);
+	        slidePos[index] = dist
+	    }
+
+	    function translate(index, dist, speed) {
+	        var slide = slides[index];
+	        var style = slide && slide.style;
+	        if (!style) {
+	            return
+	        }
+	        style.webkitTransitionDuration = style.MozTransitionDuration = style.msTransitionDuration = style.OTransitionDuration = style.transitionDuration = speed + "ms";
+	        style.webkitTransform = "translate(" + dist + "px,0)" + "translateZ(0)";
+	        style.msTransform = style.MozTransform = style.OTransform = "translateX(" + dist + "px)"
+	    }
+
+	    function animate(from, to, speed) {
+	        if (!speed) {
+	            element.style.left = to + "px";
+	            return
+	        }
+	        var start = +new Date;
+	        var timer = setInterval(function() {
+	            var timeElap = +new Date - start;
+	            if (timeElap > speed) {
+	                element.style.left = to + "px";
+	                if (delay) {
+	                    begin()
+	                }
+	                options.transitionEnd && options.transitionEnd.call(event, index, slides[index]);
+	                clearInterval(timer);
+	                return
+	            }
+	            element.style.left = (((to - from) * (Math.floor((timeElap / speed) * 100) / 100)) + from) + "px"
+	        }, 4)
+	    }
+	    var delay = options.auto || 0;
+	    var interval;
+
+	    function begin() {
+	        interval = setTimeout(next, delay)
+	    }
+
+	    function stop() {
+	        delay = 0;
+	        clearTimeout(interval)
+	    }
+	    var start = {};
+	    var delta = {};
+	    var isScrolling;
+	    var events = {
+	        handleEvent: function(event) {
+	            switch (event.type) {
+	                case "touchstart":
+	                    this.start(event);
+	                    break;
+	                case "touchmove":
+	                    this.move(event);
+	                    break;
+	                case "touchend":
+	                    offloadFn(this.end(event));
+	                    break;
+	                case "webkitTransitionEnd":
+	                case "msTransitionEnd":
+	                case "oTransitionEnd":
+	                case "otransitionend":
+	                case "transitionend":
+	                    offloadFn(this.transitionEnd(event));
+	                    break;
+	                case "resize":
+	                    offloadFn(setup.call());
+	                    break
+	            }
+	            if (options.stopPropagation) {
+	                event.stopPropagation()
+	            }
+	        },
+	        start: function(event) {
+	            var touches = event.touches[0];
+	            start = {
+	                x: touches.pageX,
+	                y: touches.pageY,
+	                time: +new Date
+	            };
+	            isScrolling = undefined;
+	            delta = {};
+	            element.addEventListener("touchmove", this, false);
+	            element.addEventListener("touchend", this, false)
+	        },
+	        move: function(event) {
+	            if (event.touches.length > 1 || event.scale && event.scale !== 1) {
+	                return
+	            }
+	            if (options.disableScroll) {
+	                event.preventDefault()
+	            }
+	            var touches = event.touches[0];
+	            delta = {
+	                x: touches.pageX - start.x,
+	                y: touches.pageY - start.y
+	            };
+	            if (typeof isScrolling == "undefined") {
+	                isScrolling = !!(isScrolling || Math.abs(delta.x) < Math.abs(delta.y))
+	            }
+	            if (!isScrolling) {
+	                event.preventDefault();
+	                stop();
+	                if (options.continuous) {
+	                    translate(circle(index - 1), delta.x + slidePos[circle(index - 1)], 0);
+	                    translate(index, delta.x + slidePos[index], 0);
+	                    translate(circle(index + 1), delta.x + slidePos[circle(index + 1)], 0)
+	                } else {
+	                    delta.x = delta.x / ((!index && delta.x > 0 || index == slides.length - 1 && delta.x < 0) ? (Math.abs(delta.x) / width + 1) : 1);
+	                    translate(index - 1, delta.x + slidePos[index - 1], 0);
+	                    translate(index, delta.x + slidePos[index], 0);
+	                    translate(index + 1, delta.x + slidePos[index + 1], 0)
+	                }
+	            }
+	        },
+	        end: function(event) {
+	            var duration = +new Date - start.time;
+	            var isValidSlide = Number(duration) < 250 && Math.abs(delta.x) > 20 || Math.abs(delta.x) > width / 2;
+	            var isPastBounds = !index && delta.x > 0 || index == slides.length - 1 && delta.x < 0;
+	            if (options.continuous) {
+	                isPastBounds = false
+	            }
+	            var direction = delta.x < 0;
+	            if (!isScrolling) {
+	                if (isValidSlide && !isPastBounds) {
+	                    if (direction) {
+	                        if (options.continuous) {
+	                            move(circle(index - 1), -width, 0);
+	                            move(circle(index + 2), width, 0)
+	                        } else {
+	                            move(index - 1, -width, 0)
+	                        }
+	                        move(index, slidePos[index] - width, speed);
+	                        move(circle(index + 1), slidePos[circle(index + 1)] - width, speed);
+	                        index = circle(index + 1)
+	                    } else {
+	                        if (options.continuous) {
+	                            move(circle(index + 1), width, 0);
+	                            move(circle(index - 2), -width, 0)
+	                        } else {
+	                            move(index + 1, width, 0)
+	                        }
+	                        move(index, slidePos[index] + width, speed);
+	                        move(circle(index - 1), slidePos[circle(index - 1)] + width, speed);
+	                        index = circle(index - 1)
+	                    }
+	                    options.callback && options.callback(index, slides[index])
+	                } else {
+	                    if (options.continuous) {
+	                        move(circle(index - 1), -width, speed);
+	                        move(index, 0, speed);
+	                        move(circle(index + 1), width, speed)
+	                    } else {
+	                        move(index - 1, -width, speed);
+	                        move(index, 0, speed);
+	                        move(index + 1, width, speed)
+	                    }
+	                }
+	            }
+	            element.removeEventListener("touchmove", events, false);
+	            element.removeEventListener("touchend", events, false)
+	        },
+	        transitionEnd: function(event) {
+	            if (parseInt(event.target.getAttribute("data-index"), 10) == index) {
+	                if (delay) {
+	                    begin()
+	                }
+	                options.transitionEnd && options.transitionEnd.call(event, index, slides[index])
+	            }
+	        }
+	    };
+	    setup();
+	    if (delay) {
+	        begin()
+	    }
+	    if (browser.addEventListener) {
+	        if (browser.touch) {
+	            element.addEventListener("touchstart", events, false)
+	        }
+	        if (browser.transitions) {
+	            element.addEventListener("webkitTransitionEnd", events, false);
+	            element.addEventListener("msTransitionEnd", events, false);
+	            element.addEventListener("oTransitionEnd", events, false);
+	            element.addEventListener("otransitionend", events, false);
+	            element.addEventListener("transitionend", events, false)
+	        }
+	        window.addEventListener("resize", events, false)
+	    } else {
+	        window.onresize = function() {
+	            setup()
+	        }
+	    }
+	    return {
+	        setup: function() {
+	            setup()
+	        },
+	        slide: function(to, speed) {
+	            stop();
+	            slide(to, speed)
+	        },
+	        prev: function() {
+	            stop();
+	            prev()
+	        },
+	        next: function() {
+	            stop();
+	            next()
+	        },
+	        getPos: function() {
+	            return index
+	        },
+	        getNumSlides: function() {
+	            return length
+	        },
+	        kill: function() {
+	            stop();
+	            element.style.width = "auto";
+	            element.style.left = 0;
+	            var pos = slides.length;
+	            while (pos--) {
+	                var slide = slides[pos];
+	                slide.style.width = "100%";
+	                slide.style.left = 0;
+	                if (browser.transitions) {
+	                    translate(pos, 0, 0)
+	                }
+	            }
+	            if (browser.addEventListener) {
+	                element.removeEventListener("touchstart", events, false);
+	                element.removeEventListener("webkitTransitionEnd", events, false);
+	                element.removeEventListener("msTransitionEnd", events, false);
+	                element.removeEventListener("oTransitionEnd", events, false);
+	                element.removeEventListener("otransitionend", events, false);
+	                element.removeEventListener("transitionend", events, false);
+	                window.removeEventListener("resize", events, false)
+	            } else {
+	                window.onresize = null
+	            }
+	        }
+	    }
+	}
+	})(Zepto, sq.ui);
+
+/***/ },
+/* 10 */
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
+
+/***/ },
+/* 11 */,
+/* 12 */
+/***/ function(module, exports, __webpack_require__) {
+
+	;
+	JSBK.Namespace.register('sq.ui');
+	(function($, C) {
+	    C.Alert = function(op) {
+	        var self = this;
+	        var defaults = {
+	            centerTitle : false, // title是否居中
+	            bgClose     : false,
+	            titleHtml   : "成功！",
+	            btnHtml     : "确定",
+	            select      : self.getSelect(),
+	            clickBtnCallback : null
+	        };
+	        this.ops = $.extend(defaults, op);
+	        this.dialog = null;
+	        this.init();
+	    }
+
+	    C.Alert.prototype.init = function() {
+	        var self = this;
+	        self.setHtml();
+	        __webpack_require__(13);
+	        self.dialog = new sq.ui.Dialog( self.ops );
+	        self.bindEvent();
+	    }
+
+	    C.Alert.prototype.open = function() {
+	        this.dialog.open();
+	    }
+
+	    C.Alert.prototype.bindEvent = function() {
+	        var self = this;
+	        self.ops.select.on("click", ".btn", function(e) {
+	            e.stopPropagation();
+	            if( self.ops.clickBtnCallback ) {
+	                self.ops.clickBtnCallback(self);
+	            } else {
+	                self.dialog.close();
+	            }
+	        });
+	    }
+
+	    C.Alert.prototype.setHtml = function() {
+	        var self = this;
+	        if(self.ops.centerTitle) {
+	            self.ops.select.addClass( "center-title" );
+	        }
+	        self.ops.select.find(".title").html( self.ops.titleHtml );
+	        self.ops.select.find(".btn").html( self.ops.btnHtml );
+	    }
+
+	    C.Alert.prototype.getSelect = function() {
+	        return $('<div class="dialog-mod dialog-alert">' +
+	                    '<p class="title"></p>' +
+	                    '<div class="btn-wrap">' +
+	                        '<span class="btn"></span>' +
+	                    '</div>' +
+	                '</div>');
+	    }
+
+	})(Zepto, sq.ui);
+
+
+/***/ },
+/* 13 */
+/***/ function(module, exports) {
+
+	;
+	JSBK.Namespace.register('sq.ui');
+	(function($, C) {
+
+	    var Observer = {
+	        listener: {
+	            defaults: []
+	        },
+	        on: function(type, fn, context) {
+	            var _type,
+	                _fn;
+	            if (typeof type !== 'string' && typeof type !== 'undefined') {
+	                return;
+	            }
+	            if (typeof fn !== 'function' && typeof context[fn] !== 'function') {
+	                return;
+	            }
+	            _type = type || 'defaults';
+	            _fn = typeof fn === 'function' ? fn : context[fn];
+	            if (typeof this.listener[_type] === 'undefined') {
+	                this.listener[_type] = [];
+	            }
+	            this.listener[_type].push({
+	                fn: _fn,
+	                context: context || this
+	            });
+	        },
+	        off: function(type, fn, context) {
+	            var _type = type || 'defaults',
+	                sub = this.listener[_type],
+	                i,
+	                _context = context || this,
+	                max = sub ? sub.length : 0;
+
+	            for (i = 0; i < max; i++) {
+	                if (sub[i].fn === fn && sub[i].context === _context) {
+	                    sub.splice(i, 1);
+	                }
+	            }
+	        },
+	        trigger: function(type, args) {
+	            var _type = type || 'defaults',
+	                sub = this.listener[_type],
+	                i,
+	                _args,
+	                max = sub ? sub.length : 0;
+	            if (!$.isArray(args)) { // 为了兼容老的代码，这里必须转一下
+	                if (args) {
+	                    _args = [args];
+	                } else {
+	                    _args = [];
+	                }
+	            }
+	            for (i = 0; i < max; i++) {
+	                sub[i].fn.apply(sub[i].context, _args);
+	            }
+	        }
+	    };
+
+	    function addPublisher(o) {
+	        $.extend(true, o, Observer);
+	    }
+
+	    C.Dialog = function(opt) {
+	        var defaults = {
+	            className: 'g-d-dialog',
+	            actionEvent: 'click',
+	            bgClose: false,
+	            targetNode: ''
+	        };
+	        this.ops = $.extend(defaults, opt);
+	        this.dom = {};
+	        addPublisher(this);
+	        this.init();
+	    };
+
+	    C.Dialog.prototype = {
+	        constructor: C.Dialog,
+	        init: function() {
+	            var frame = $(document.createDocumentFragment()),
+	                _this = this,
+	                content,
+	                div = $('<div></div>');
+	            div.addClass(this.ops.className);
+	            frame.append(div);
+	            if(this.ops.select){
+	                content = $(this.ops.select);
+	            }
+	            div.append(content||'');
+	            $('body').append(frame);
+	            this.dom.dialog = div;
+
+	            // 禁止弹层上面的touchmove
+	            this.dom.dialog.on('touchmove', function(e) {
+	                e.preventDefault();
+	            });
+
+	            // 关闭按钮
+	            $(this.ops.closeSelect).click(function(event) { // 初始化关闭按钮
+	                event.stopPropagation();
+	                _this.trigger('dialogClose');
+	                _this.close();
+	            });
+
+	            // 点击背景关闭
+	            if (this.ops.bgClose) {
+	                div.click(function(event) { // 点击背景关闭
+	                    if (event.target === this) {
+	                        event.stopPropagation();
+	                        _this.trigger('bgClose');
+	                        _this.close();
+	                    }
+	                });
+	            }
+
+	            // 输入框
+	            div.find('input').blur(function(event) {
+	                event.stopPropagation();
+	                _this.fixDrawSlow();
+	            });
+
+	            // 打开弹框
+	            if (this.ops.targetNode) {
+	                $(this.ops.targetNode).on(this.ops.actionEvent, function(event) {
+	                    event.stopPropagation();
+	                    var arr = [].slice.call(arguments);
+	                    _this.open(arr.slice(1));
+	                });
+	            }
+	        },
+	        open: function(arg) {
+	            this.trigger('open', arg);
+	            this.dom.dialog.css('display', '-webkit-box');
+	            this.trigger('afteropen', arg);
+	        },
+	        close: function(arg) {
+	            this.dom.dialog.hide();
+	            this.trigger('close', arg);
+	        },
+	        getDialog: function() {
+	            return this.dom.dialog;
+	        },
+	        fixDrawSlow: function() {
+	            var top = $(window).scrollTop();
+	            setTimeout(function() {
+	                $(window).scrollTop(top + 1);
+	                setTimeout(function() {
+	                    $(window).scrollTop(top);
+	                }, 10);
+	            }, 1);
+	        },
+	    };
+	})(Zepto, sq.ui);
+
+
+/***/ },
+/* 14 */
+/***/ function(module, exports, __webpack_require__) {
+
+	;
+	JSBK.Namespace.register('sq.ui');
+	(function($, C) {
+	    C.Confirm = function(op) {
+	        var self = this;
+	        var defaults = {
+	            bgClose         : false,
+	            titleHtml       : "确定？",
+	            cancleBtnHtml   : "取消",
+	            confirmBtnHtml  : "确定",
+	            select          : self.getSelect(),
+	            cancleCallback  : null,
+	            confirmCallback : null
+	        };
+	        this.ops = $.extend(defaults, op);
+	        this.dialog = null;
+	        this.init();
+	    }
+
+	    C.Confirm.prototype.init = function() {
+	        var self = this;
+	        self.setHtml();
+	        __webpack_require__(13);
+	        self.dialog = new sq.ui.Dialog( self.ops );
+	        self.bindEvent();
+	    }
+
+	    C.Confirm.prototype.open = function() {
+	        this.dialog.open();
+	    }
+
+	    C.Confirm.prototype.bindEvent = function() {
+	        var self = this;
+
+	        // 绑定： 点击“取消”
+	        self.ops.select.on("click", ".cancle-btn", function(e) {
+	            e.stopPropagation();
+	            if( self.ops.cancleCallback ) {
+	                self.ops.cancleCallback(self);
+	            } else {
+	                self.dialog.close();
+	            }
+	        });
+
+	        // 绑定： 点击“确定”
+	        self.ops.select.on("click", ".confirm-btn", function(e) {
+	            e.stopPropagation();
+	            if( self.ops.confirmCallback ) {
+	                self.ops.confirmCallback(self);
+	            } else {
+	                self.dialog.close();
+	            }
+	        });
+	    }
+
+	    C.Confirm.prototype.setHtml = function() {
+	        var self = this;
+	        self.ops.select.find(".title").html( self.ops.titleHtml );
+	        self.ops.select.find(".cancle-btn").html( self.ops.cancleBtnHtml );
+	        self.ops.select.find(".confirm-btn").html( self.ops.confirmBtnHtml );
+	    }
+
+	    C.Confirm.prototype.getSelect = function() {
+	        return $('<div class="dialog-mod dialog-confirm">' +
+	                    '<p class="title"></p>' +
+	                    '<div class="btn-wrap">' +
+	                        '<span class="btn cancle-btn"></span>' +
+	                        '<span class="btn confirm-btn"></span>' +
+	                    '</div>' +
+	                '</div>');
+	    }
+
+	})(Zepto, sq.ui);
+
+
+/***/ },
+/* 15 */
+/***/ function(module, exports, __webpack_require__) {
+
+	;
+	JSBK.Namespace.register('sq.ui');
+	(function($, C) {
+	    C.Blink = function(op) {
+	        var self = this;
+	        var defaults = {
+	            className   : "g-d-dialog blink-mod",
+	            bgClose     : false,
+	            select      : self.getSelect(),
+	            blinkHtml   : "blink blink",
+	            intervaltime : 3000    // 多长时间之后消失
+	        };
+	        this.ops = $.extend(defaults, op);
+	        this.dialog = null;
+	        this.init();
+	    }
+
+	    C.Blink.prototype.init = function() {
+	        var self = this;
+	        self.setHtml();
+	        __webpack_require__(13);
+	        self.dialog = new sq.ui.Dialog( self.ops );
+	    }
+
+	    C.Blink.prototype.open = function(callback) {
+	        var self = this;
+	        self.dialog.open();
+	        setTimeout(function() {
+	            if( self.ops.timeoutCallback ) {
+	                self.ops.timeoutCallback(self);
+	            } else {
+	                self.dialog.close();
+	                callback && callback()
+	            }
+	        }, self.ops.intervaltime);
+	    }
+
+	    C.Blink.prototype.setHtml = function() {
+	        var self = this;
+	        self.ops.select.find(".blink-content").html( self.ops.blinkHtml );
+	    }
+
+	    C.Blink.prototype.setDoc = function(doc) {
+	        var self = this;
+	        self.dialog.dom.dialog.find(".blink-content").empty().append(doc);
+	    }
+
+	    C.Blink.prototype.getSelect = function() {
+	        return $('<div class="dialog-mod dialog-blink">' +
+	                    '<p class="blink-content"></p>' +
+	                '</div>');
+	    }
+
+	})(Zepto, sq.ui);
+
+
+
+
+
+
+
+
+/***/ }
+]);
