@@ -1,4 +1,4 @@
-webpackJsonp([0,4],[
+webpackJsonp([0],[
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -142,11 +142,7 @@ webpackJsonp([0,4],[
 	            line: line
 	        });
 	    }
-
-	    function preventDefault(event) {
-	        event.preventDefault();
-	    }
-
+	    
 	    jsbk.Namespace = {
 	        register: function(ns) {
 	            var nsParts = ns.split("."),
@@ -234,30 +230,6 @@ webpackJsonp([0,4],[
 	            }
 	        },
 
-	        touchClick: function() {
-	            var status = true;
-	            $(doc).on('touchmove', function() {
-	                if (status) {
-	                    doc.addEventListener('click', preventDefault, true);
-	                    status = false;
-	                }
-	            });
-
-	            $(doc).on('touchend', function() {
-	                doc.removeEventListener('click', preventDefault, true);
-	                status = true;
-	            });
-	        },
-	        
-	        /**
-	         * [getGuid 在统计电话时长的时候为了保持唯一关联性，防止用户间隔时间长或者清除cookie后两个soj无法关联起来]
-	         * @param  {[String]} sType
-	         * @return {[String]}
-	         */
-	        log: function(params) {
-	            return log(params);
-	        },
-
 	        LocalStorageHelper: function(action, key, val) {
 	            try {
 	                if (action == "setItem") {
@@ -270,24 +242,10 @@ webpackJsonp([0,4],[
 	            } catch (e) {
 	                return false;
 	            }
-	        },
-	        //替代原生scroll事件
-	        scrollHelper: function(selector){
-	            var record = {};
-	            $('body').on("touchstart", selector, function(e) {
-	                record.startTop = e.targetTouches[0].screenY; // 触摸开始时触摸点的位置
-	                record.startScrollTop = $(this).scrollTop();  // 触摸开始时内div的scrollTop
-	            });
-	            $('body').on("touchmove", selector, function(e) {
-	                e.preventDefault();
-	                var curY = e.targetTouches[0].screenY;
-	                $(this).scrollTop( record.startScrollTop + record.startTop - curY ); // js控制滚动
-	            });
 	        }
 	    };
 
 	    win.JSBK = jsbk;
-	    win.JS = jsbk.Utils;
 	})(window, document, Zepto);
 
 

@@ -58,7 +58,7 @@ $(function() {
                 },
                 //请求成功时执行
                 success: function(data) {
-                    if (data.code !== 1) {
+                    if (data.isSuccess !== 1) {
                         errorTip.html(data.content);
                         return false;
                     }
