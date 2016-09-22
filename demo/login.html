@@ -19,8 +19,8 @@
     <link rel="stylesheet" href="../dist/page/login.css">
 </head>
 <body>
-    <div class="lg-cont">
-        <div class="lg-banner"></div>
+    <div class="member-cont">
+        <div class="member-banner"></div>
         <div class="lg-form">
             <label>
                 <span class="lg-ico tel"></span>
@@ -28,11 +28,12 @@
             </label>
             <label>
                 <span class="lg-ico pwd"></span>
-                <input type="password" placeholder="请输入密码" value="" name="pass" id="lg_pwd">
+                <input type="password" placeholder="请输入密码" value="" name="pass" maxlength="16" id="lg_pwd">
                 <em class="lg-eyes"></em>
             </label>
+            <p class="error-tip"><span></span></p>
         </div>
-        <a href="javascript:void(0);" class="lg-btn">登录</a>
+        <a href="javascript:void(0);" class="member-btn" id="lg_btn">登录</a>
         <p class="log-tip">还没有账号？现在去<a href="#">免费注册</a></p>
     </div>
     <script type="text/javascript" src="../src/common/zepto.min.js"></script>

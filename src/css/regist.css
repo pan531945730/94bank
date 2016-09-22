@@ -1,10 +1,7 @@
-.reg-cont {
-    padding: 0px 20px;
-}
 .reg-form label {
     display: -webkit-box;
     border-bottom: 1px solid #d9d9d9;
-    padding: 10px 0 8px 0;
+    padding: 15px 0;
     font-size: 1.6rem;
     line-height: 22px;
 }
@@ -56,23 +53,17 @@
     height: 15px;
     border-left: 1px solid #999;
 }
-.reg-btn {
-    display: block;
-    margin: 40px auto 10px auto;
-    width: 100%;
-    height: 40px;
-    line-height: 40px;
-    background-color: #ff6666;
-    border-radius: 5px;
-    text-align: center;
-    font-size: 1.5rem;
-    color: #fff;
-}
 .log-tip {
-    font-size: 1.8rem;
+    font-size: 1.6rem;
     color: #b6b6b6;
     text-align: center;
 }
 .log-tip a {
     color: #ff6666;
+}
+.error-tip{
+    height: 20px;
+    padding-top: 10px;
+    color: #ff6666;
+    font-size: 1.4rem;
 }
