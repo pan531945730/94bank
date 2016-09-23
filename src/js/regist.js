@@ -115,6 +115,7 @@ $(function() {
             success: function(data) {
                 if (data.IsSuccess === 1) {
                     if(location.href.indexOf("returnUrl")!=-1){
+                        var returnUrl = JSBK.Utils.GetUrlSearch().returnUrl;
                         location.href = returnUrl;
                     }else{
                         //未来可能会跳到首页

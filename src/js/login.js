@@ -59,6 +59,7 @@ $(function() {
             //请求成功时执行
             success: function(data) {
                 if (data.IsSuccess === 1) {
+                    var returnUrl = JSBK.Utils.GetUrlSearch().returnUrl;
                     location.href = returnUrl;
                 } else {
                     errorTip.html(data.Result);
