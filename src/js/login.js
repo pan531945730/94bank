@@ -11,10 +11,10 @@ $(function() {
         errorTip = $('.error-tip').find('span');
 
     /*输入文本提示文案消失*/
-    $('#lg_tel, #lg_pwd').on('input',function() {
+    $('#lg_tel, #lg_pwd').on('input', function() {
         errorTip.html('');
     })
-    
+
     /*点击更改密码显示状态*/
     lgEyes.on('click', function() {
         $(this).toggleClass('open-eyes');
@@ -51,7 +51,7 @@ $(function() {
         $.ajax({
             type: 'post',
             dataType: 'json',
-            url: 'member/login',
+            url: 'login',
             data: {
                 'phone': telVal,
                 'password': pwdVal,

@@ -87,15 +87,22 @@
         });
     }
 
-    function getUserSuc (callback){
+    window.getUserSuc = function (callback){
         callback('123@h5.com');
     }
 
     /*app端*/
     JSBK.connectWebViewJavascriptBridge(function(bridge) {
-                
-        function getUserSuc (callback){
-            bridge.callHandler('getToken', null, function(response){
+        
+        bridge.init(function(message, responseCallback) {
+            /*alert('JS got a message', message)
+            var data = { 'Javascript Responds':'Wee!' }
+            alert('JS responding with', data)
+            responseCallback(data)*/
+        })
+
+        window.getUserSuc = function (callback){
+            bridge.callHandler('com.hongzhe.bank94.getToken', null, function(response){
                 callback(response);
             })
         }

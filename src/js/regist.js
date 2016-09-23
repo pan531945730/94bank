@@ -103,7 +103,7 @@ $(function() {
         $.ajax({
             type: 'post',
             dataType: 'json',
-            url: '/h5/regist',
+            url: 'regist',
             async: false,
             data: {
                 'phone': telVal,
