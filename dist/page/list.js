@@ -1,17 +1,1 @@
-webpackJsonp([1],{
-
-/***/ 0:
-/***/ function(module, exports, __webpack_require__) {
-
-	__webpack_require__(16);
-
-/***/ },
-
-/***/ 16:
-/***/ function(module, exports) {
-
-	// removed by extract-text-webpack-plugin
-
-/***/ }
-
-});
+webpackJsonp([5,0],{0:function(n,c,o){o(5)},5:function(n,c){}});

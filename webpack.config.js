@@ -14,7 +14,8 @@ module.exports = {
         home: './src/js/home.js',
         list: './src/js/list.js',
         login: './src/js/login.js',
-        regist: './src/js/regist.js'
+        regist: './src/js/regist.js',
+        pdiPhone: './src/js/pdiPhone.js'
     },
     //入口文件输出配置
     output: {

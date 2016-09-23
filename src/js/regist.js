@@ -58,8 +58,8 @@ $(function() {
                 },
                 //请求成功时执行
                 success: function(data) {
-                    if (data.isSuccess !== 1) {
-                        errorTip.html(data.content);
+                    if (data.IsSuccess !== 1) {
+                        errorTip.html(data.Result);
                         return false;
                     }
                     var time = 120;
@@ -113,7 +113,7 @@ $(function() {
             },
             //请求成功时执行
             success: function(data) {
-                if (data.isSuccess === 1) {
+                if (data.IsSuccess === 1) {
                     if(location.href.indexOf("returnUrl")!=-1){
                         location.href = returnUrl;
                     }else{

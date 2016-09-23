@@ -74,16 +74,34 @@
 
     buildYieldBg();
 
-    require('../ui/Dialog.css');
-    require('../ui/Alert.js');
-    var openAlert = new sq.ui.Alert({"targetNode" : ".open-btn"});
+    $('.open-btn').on('click',function(e) {
+        e.preventDefault();
+        onButtonClick();
+    })
 
-    require('../ui/Confirm.js');
-    var openConfirm = new sq.ui.Confirm({"targetNode" : ".yield-info"});
+    function onButtonClick(){
+        
+        getUserSuc(function(token){
+            // do something  
+            alert(token);
+        });
+    }
 
-    require('../ui/Blink.js');
-    var openBlink = new sq.ui.Blink();
-    openBlink.open();
+    function getUserSuc (callback){
+        callback('123@h5.com');
+    }
+
+    /*app端*/
+    JSBK.connectWebViewJavascriptBridge(function(bridge) {
+                
+        function getUserSuc (callback){
+            bridge.callHandler('getToken', null, function(response){
+                callback(response);
+            })
+        }
+
+    })
+    
   });
 
 

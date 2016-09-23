@@ -27,7 +27,7 @@
             line: line
         });
     }
-    
+
     jsbk.Namespace = {
         register: function(ns) {
             var nsParts = ns.split("."),
@@ -127,8 +127,40 @@
             } catch (e) {
                 return false;
             }
+        },
+
+        //获取url中"?"符后的字串 
+        GetUrlSearch: function() {
+            var url = location.search; 
+            var theRequest = new Object();
+            if (url.indexOf("?") != -1) {
+                var str = url.substr(1);
+                strs = str.split("&");
+                for (var i = 0; i < strs.length; i++) {
+                    theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
+                }
+            }
+            return theRequest;
         }
     };
+
+    jsbk.connectWebViewJavascriptBridge = function(callback) {
+        if (window.WebViewJavascriptBridge) {
+            callback(WebViewJavascriptBridge)
+        } else {
+            window.WVJBCallbacks = [callback];
+            var WVJBIframe = document.createElement('iframe');
+            WVJBIframe.style.display = 'none';
+            WVJBIframe.src = 'wvjbscheme://__BRIDGE_LOADED__';
+            document.documentElement.appendChild(WVJBIframe);
+            setTimeout(function() {
+                document.documentElement.removeChild(WVJBIframe)
+            }, 0)
+            document.addEventListener('WebViewJavascriptBridgeReady', function() {
+                callback(WebViewJavascriptBridge)
+            }, false)
+        }
+    }
 
     win.JSBK = jsbk;
 })(window, document, Zepto);
