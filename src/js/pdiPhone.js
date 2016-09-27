@@ -14,7 +14,7 @@ $(function() {
         data: {
             "productId": productId
         },
-        beforeSend : function(xhr,settings){
+        beforeSend: function(xhr,settings){
             pdLoad.show();
         },
         success: function(data) {

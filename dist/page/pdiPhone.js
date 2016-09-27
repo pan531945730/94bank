@@ -1,4 +1,4 @@
-webpackJsonp([3,5],{
+webpackJsonp([3],{
 
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
@@ -19,7 +19,7 @@ webpackJsonp([3,5],{
 	        data: {
 	            "productId": productId
 	        },
-	        beforeSend : function(xhr,settings){
+	        beforeSend: function(xhr,settings){
 	            pdLoad.show();
 	        },
 	        success: function(data) {

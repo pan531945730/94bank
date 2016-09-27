@@ -1,4 +1,4 @@
-webpackJsonp([0,5],[
+webpackJsonp([0],[
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -78,22 +78,48 @@ webpackJsonp([0,5],[
 
 	    buildYieldBg();
 
-	    $('.open-btn').on('click',function(e) {
+	    $('#open_btn').on('click',function(e) {
 	        e.preventDefault();
-	        onButtonClick();
+	        bindButtonClick();
 	    })
-
-	    function onButtonClick(){
+	    function bindButtonClick() {
 	        
-	        getUserSuc(function(token){
-	            // do something  
-	            alert(token);
+	        getUserSuc(function(token) {
+	            $('#open_btn').html(token);
 	        });
 	    }
 
-	    window.getUserSuc = function (callback){
+	    window.getUserSuc = function(callback) {
 	        callback('123@h5.com');
 	    }
+
+
+	    $('#check_ticket').on('click',function(e) {
+	        e.preventDefault();
+	        bindCheckTicket();
+	    })
+	    function bindCheckTicket() {
+	        getTicket(function(number){
+	            $('#check_ticket').html(number);
+	        })
+	    }
+	    window.getTicket = function(callback) {
+	        callback("hongbaonumber@h5.com")
+	    }
+
+	    $('#product_detail').on('click',function(e) {
+	        e.preventDefault();
+	        bindproductDetail();
+	    })
+	    function bindproductDetail() {
+	        getDetail(function(detail){
+	            $('#product_detail').html(detail);
+	        })
+	    }
+	    window.getDetail = function(callback) {
+	        callback("detail@h5.com")
+	    }
+	    
 
 	    /*app端*/
 	    JSBK.connectWebViewJavascriptBridge(function(bridge) {
@@ -109,7 +135,19 @@ webpackJsonp([0,5],[
 	            bridge.callHandler('com.hongzhe.bank94.getToken', null, function(response){
 	                callback(response);
 	            })
-	        }
+	        };
+
+	        window.getTicket = function (callback){
+	            bridge.callHandler('com.hongzhe.bank94.requestCheckTickets', null, function(response){
+	                callback(response);
+	            })
+	        };
+
+	        window.getDetail = function (callback){
+	            bridge.callHandler('com.hongzhe.bank94.requestProductDetail', {'proType':'3'}, function(response){
+	                callback(response);
+	            })
+	        };
 
 	    })
 	    
