@@ -1,4 +1,4 @@
-webpackJsonp([3,6],{
+webpackJsonp([4,6],{
 
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
@@ -7,8 +7,8 @@ webpackJsonp([3,6],{
 	$(function() {
 	    __webpack_require__(1);
 	    __webpack_require__(7);
-	    __webpack_require__(16);        
-
+	    __webpack_require__(18);        
+	    
 	    var productId = JSBK.Utils.GetUrlSearch().ProductId,
 	        pdLoad = $('.pd-load');
 	    $.ajax({
@@ -25,22 +25,20 @@ webpackJsonp([3,6],{
 	        success: function(data) {
 	            if (data != null) {
 	                pdLoad.hide();
-	                $('#tit').html(data.Title);
-	                $('#earn').html(data.InterestRateText);
-	                $('#limit').html(data.InvestmentTimeText);
-	                $('#amount').html(data.StartAmount + '元');
-	                $('.rule').html(data.SaleRule);
-	                $('.describe').html(data.ProjectDetail);
-	                $('.security').html(data.FundSecurityDetail);
-	                var des = "";
+
 	                if (productId == "41") {
-	                    des = "每日收益到账";
+	                    data.des = "每日收益到账";
 	                } else if (productId == "2011") {
-	                    des = "次日收益到账";
+	                    data.des = "次日收益到账";
 	                } else {
-	                    des = "到期后返还本金收益";
+	                    data.des = "到期后返还本金收益";
 	                }
-	                $('#way').html(des);
+
+	                var htmlList = '',
+	                    htmlTemp = $("textarea").val();
+
+	                htmlList = htmlTemp.temp(data);
+	                pdLoad.before(htmlList);
 	            }
 	        },
 	        error: function(text) {
@@ -237,7 +235,7 @@ webpackJsonp([3,6],{
 
 /***/ },
 
-/***/ 16:
+/***/ 18:
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin

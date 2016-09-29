@@ -1,4 +1,4 @@
-webpackJsonp([2,5],[
+webpackJsonp([2,6],[
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -256,6 +256,13 @@ webpackJsonp([2,5],[
 	                callback(WebViewJavascriptBridge)
 	            }, false)
 	        }
+	    }
+
+	    String.prototype.temp = function(obj) {
+	        return this.replace(/\$\w+\$/gi, function(matchs) {
+	            var returns = obj[matchs.replace(/\$/g, "")];       
+	            return (returns + "") == "undefined"? "": returns;
+	        });
 	    }
 
 	    win.JSBK = jsbk;

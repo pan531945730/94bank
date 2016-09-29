@@ -1,4 +1,4 @@
-webpackJsonp([4,5],{
+webpackJsonp([5,6],{
 
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
@@ -6,7 +6,7 @@ webpackJsonp([4,5],{
 	$(function() {
 	    __webpack_require__(1);
 	    __webpack_require__(7);
-	    __webpack_require__(18);
+	    __webpack_require__(20);
 	    __webpack_require__(14);
 	    var regTel = $('#reg_tel'),
 	        regCode = $('#reg_code'),
@@ -318,6 +318,13 @@ webpackJsonp([4,5],{
 	        }
 	    }
 
+	    String.prototype.temp = function(obj) {
+	        return this.replace(/\$\w+\$/gi, function(matchs) {
+	            var returns = obj[matchs.replace(/\$/g, "")];       
+	            return (returns + "") == "undefined"? "": returns;
+	        });
+	    }
+
 	    win.JSBK = jsbk;
 	})(window, document, Zepto);
 
@@ -330,7 +337,7 @@ webpackJsonp([4,5],{
 
 /***/ },
 
-/***/ 18:
+/***/ 20:
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
