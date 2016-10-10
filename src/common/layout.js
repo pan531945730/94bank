@@ -167,6 +167,7 @@
             var returns = obj[matchs.replace(/\$/g, "")];       
             return (returns + "") == "undefined"? "": returns;
         });
+        
     }
 
     win.JSBK = jsbk;

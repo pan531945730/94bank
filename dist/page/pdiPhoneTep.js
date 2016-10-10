@@ -1,4 +1,4 @@
-webpackJsonp([4,6],{
+webpackJsonp([4,7],{
 
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
@@ -228,6 +228,7 @@ webpackJsonp([4,6],{
 	            var returns = obj[matchs.replace(/\$/g, "")];       
 	            return (returns + "") == "undefined"? "": returns;
 	        });
+	        
 	    }
 
 	    win.JSBK = jsbk;

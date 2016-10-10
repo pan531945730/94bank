@@ -16,18 +16,24 @@ module.exports = {
         login: './src/js/login.js',
         regist: './src/js/regist.js',
         pdiPhone: './src/js/pdiPhone.js',
-        pdiPhoneTep: './src/js/pdiPhoneTep.js'
+        pdiPhoneTep: './src/js/pdiPhoneTep.js',
+        signature: './src/js/signature.js'
     },
     //入口文件输出配置
     output: {
-        path: 'dist/page/',
+        path:  __dirname + 'dist/page/',
         filename: '[name].js'
     },
     watch: true,
     module: { 
      loaders: [ 
-        { test: /\.css$/, loader: ExtractTextPlugin.extract("style-loader","css-loader") } 
-        
+        { 
+            test: /\.css$/, 
+            loader: ExtractTextPlugin.extract("style-loader","css-loader") },
+        {
+            test:/\.(png)|(jpg)$/,
+            loader: "url?limit=50000"
+        }         
      ] 
     },
     resolve: {
