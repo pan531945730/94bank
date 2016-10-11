@@ -47,8 +47,8 @@
 	$(function() {
 	    __webpack_require__(1);
 	    __webpack_require__(5);
-	    __webpack_require__(10);
-	    __webpack_require__(8);
+	    __webpack_require__(14);
+	    __webpack_require__(12);
 	    var regTel = $('#reg_tel'),
 	        regCode = $('#reg_code'),
 	        getCode = $('.reg-getcode'),
@@ -374,14 +374,18 @@
 /***/ },
 /* 6 */,
 /* 7 */,
-/* 8 */
+/* 8 */,
+/* 9 */,
+/* 10 */,
+/* 11 */,
+/* 12 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
-/* 9 */,
-/* 10 */
+/* 13 */,
+/* 14 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin

@@ -23,10 +23,11 @@ module.exports = {
      loaders: [ 
         { 
             test: /\.css$/, 
-            loader: ExtractTextPlugin.extract("style-loader","css-loader") },
+            loader: ExtractTextPlugin.extract("style-loader","css-loader") 
+        },
         {
             test:/\.(png|jpg|eot|woff|ttf|svg)$/,
-            loader: 'url-loader?limit=1'
+            loader: 'url-loader?limit=8192'
         }         
      ] 
     },
@@ -36,6 +37,5 @@ module.exports = {
         modulesDirectories: [
           'node_modules'
         ]        
-    },
-    context: path.join(__dirname, 'src')
+    }
 };

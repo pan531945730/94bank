@@ -49,7 +49,7 @@
 	$(function() {
 	    __webpack_require__(1);
 	    __webpack_require__(5);
-	    __webpack_require__(18);        
+	    __webpack_require__(22);        
 	    
 	    var productId = JSBK.Utils.GetUrlSearch().ProductId,
 	        pdLoad = $('.pd-load');
@@ -278,7 +278,7 @@
 
 /***/ },
 
-/***/ 18:
+/***/ 22:
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin

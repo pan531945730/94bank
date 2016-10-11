@@ -47,15 +47,15 @@
 	;
 	$(function() {
 	    __webpack_require__(1);
-	    __webpack_require__(12);
+	    __webpack_require__(16);
 	    __webpack_require__(5);
 	    /*图片懒加载*/
-	    __webpack_require__(14);
+	    __webpack_require__(18);
 	    new sq.ui.LazyLoadImg({
 	        select: '.imglazyload'
 	    });
 
-	    __webpack_require__(15);
+	    __webpack_require__(19);
 	    new sq.ui.Swipe($('#swipe_wrap')[0], {
 	        startSlide: 0,
 	        speed: 0,
@@ -403,14 +403,18 @@
 /* 9 */,
 /* 10 */,
 /* 11 */,
-/* 12 */
+/* 12 */,
+/* 13 */,
+/* 14 */,
+/* 15 */,
+/* 16 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
-/* 13 */,
-/* 14 */
+/* 17 */,
+/* 18 */
 /***/ function(module, exports) {
 
 	;
@@ -511,7 +515,7 @@
 	})(Zepto, sq.ui);
 
 /***/ },
-/* 15 */
+/* 19 */
 /***/ function(module, exports) {
 
 	;
