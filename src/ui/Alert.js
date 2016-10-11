@@ -1,7 +1,6 @@
 ;
-JSBK.Namespace.register('sq.ui');
-(function($, C) {
-    C.Alert = function(op) {
+(function($) {
+    var Alert = function(op) {
         var self = this;
         var defaults = {
             centerTitle : false, // title是否居中
@@ -16,19 +15,20 @@ JSBK.Namespace.register('sq.ui');
         this.init();
     }
 
-    C.Alert.prototype.init = function() {
+    Alert.prototype.init = function() {
         var self = this;
         self.setHtml();
-        require('../ui/Dialog.js');
-        self.dialog = new sq.ui.Dialog( self.ops );
+        require('../ui/Dialog.css');
+        var Dialog = require('../ui/Dialog.js');
+        self.dialog = new Dialog( self.ops );
         self.bindEvent();
     }
 
-    C.Alert.prototype.open = function() {
+    Alert.prototype.open = function() {
         this.dialog.open();
     }
 
-    C.Alert.prototype.bindEvent = function() {
+    Alert.prototype.bindEvent = function() {
         var self = this;
         self.ops.select.on("click", ".btn", function(e) {
             e.stopPropagation();
@@ -40,7 +40,7 @@ JSBK.Namespace.register('sq.ui');
         });
     }
 
-    C.Alert.prototype.setHtml = function() {
+    Alert.prototype.setHtml = function() {
         var self = this;
         if(self.ops.centerTitle) {
             self.ops.select.addClass( "center-title" );
@@ -49,7 +49,7 @@ JSBK.Namespace.register('sq.ui');
         self.ops.select.find(".btn").html( self.ops.btnHtml );
     }
 
-    C.Alert.prototype.getSelect = function() {
+    Alert.prototype.getSelect = function() {
         return $('<div class="dialog-mod dialog-alert">' +
                     '<p class="title"></p>' +
                     '<div class="btn-wrap">' +
@@ -58,4 +58,5 @@ JSBK.Namespace.register('sq.ui');
                 '</div>');
     }
 
-})(Zepto, sq.ui);
+    module.exports = Alert;
+})(Zepto);

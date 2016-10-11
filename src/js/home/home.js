@@ -4,13 +4,14 @@ $(function() {
     require('../../css/home/home.css');
     require('../../common/layout.js');
     /*图片懒加载*/
-    require('../../ui/LazyLoadImg.js');
-    new sq.ui.LazyLoadImg({
+    var LazyLoadImg = require('../../ui/LazyLoadImg.js');
+    new LazyLoadImg({
         select: '.imglazyload'
     });
 
-    require('../../ui/Swipe.js');
-    new sq.ui.Swipe($('#swipe_wrap')[0], {
+    var Swipe = require('../../ui/Swipe.js');
+
+    new Swipe($('#swipe_wrap')[0], {
         startSlide: 0,
         speed: 0,
         auto: 1000,
@@ -75,8 +76,12 @@ $(function() {
 
     buildYieldBg();
 
+    var Confirm = require('../../ui/Confirm.js');
+    var openConfirm = new Confirm();
+
     $('#open_btn').on('click', function(e) {
         e.preventDefault();
+        openConfirm.open();
         bindButtonClick();
     })
 

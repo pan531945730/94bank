@@ -1,7 +1,6 @@
 ;
-JSBK.Namespace.register('sq.ui');
-(function($, w) {
- w.Swipe = function(container, options) {
+(function($) {
+ var Swipe = function(container, options) {
     var noop = function() {};
     var offloadFn = function(fn) {
         setTimeout(fn || noop, 0)
@@ -363,4 +362,7 @@ JSBK.Namespace.register('sq.ui');
         }
     }
 }
-})(Zepto, sq.ui);
+
+module.exports = Swipe;
+
+})(Zepto);

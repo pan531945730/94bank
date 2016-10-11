@@ -1,7 +1,6 @@
 ;
-JSBK.Namespace.register('sq.ui');
-(function($, C) {
-    C.Confirm = function(op) {
+(function($) {
+    var Confirm = function(op) {
         var self = this;
         var defaults = {
             bgClose         : false,
@@ -17,19 +16,20 @@ JSBK.Namespace.register('sq.ui');
         this.init();
     }
 
-    C.Confirm.prototype.init = function() {
+    Confirm.prototype.init = function() {
         var self = this;
         self.setHtml();
-        require('../ui/Dialog.js');
-        self.dialog = new sq.ui.Dialog( self.ops );
+        require('../ui/Dialog.css');
+        var Dialog = require('../ui/Dialog.js');
+        self.dialog = new Dialog( self.ops );
         self.bindEvent();
     }
 
-    C.Confirm.prototype.open = function() {
+    Confirm.prototype.open = function() {
         this.dialog.open();
     }
 
-    C.Confirm.prototype.bindEvent = function() {
+    Confirm.prototype.bindEvent = function() {
         var self = this;
 
         // 绑定： 点击“取消”
@@ -53,14 +53,14 @@ JSBK.Namespace.register('sq.ui');
         });
     }
 
-    C.Confirm.prototype.setHtml = function() {
+    Confirm.prototype.setHtml = function() {
         var self = this;
         self.ops.select.find(".title").html( self.ops.titleHtml );
         self.ops.select.find(".cancle-btn").html( self.ops.cancleBtnHtml );
         self.ops.select.find(".confirm-btn").html( self.ops.confirmBtnHtml );
     }
 
-    C.Confirm.prototype.getSelect = function() {
+    Confirm.prototype.getSelect = function() {
         return $('<div class="dialog-mod dialog-confirm">' +
                     '<p class="title"></p>' +
                     '<div class="btn-wrap">' +
@@ -70,4 +70,6 @@ JSBK.Namespace.register('sq.ui');
                 '</div>');
     }
 
-})(Zepto, sq.ui);
+    module.exports = Confirm;
+
+})(Zepto);

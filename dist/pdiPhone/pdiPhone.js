@@ -49,7 +49,7 @@
 	$(function() {
 	    __webpack_require__(1);
 	    __webpack_require__(5);
-	    __webpack_require__(20);        
+	    __webpack_require__(19);        
 
 	    var productId = JSBK.Utils.GetUrlSearch().ProductId,
 	        pdLoad = $('.pd-load');
@@ -107,47 +107,6 @@
 	(function(win, doc, $) {
 
 	    var jsbk = win.JSBK || {};
-
-	    function log(params) {
-	        var key,
-	            arr = [];
-	        if (typeof params === 'string') {
-	            msg = params;
-	        }
-	        if (typeof params === 'object') {
-	            for (key in params) {
-	                if (params.hasOwnProperty(key)) {
-	                    arr.push(key + ':' + encodeURIComponent(JSON.stringify(params[key])));
-	                }
-	            }
-	            msg = arr.join(',');
-	        }
-	        return true;
-	    }
-
-	    win.onerror = function(msg, url, line) {
-	        log({
-	            message: msg,
-	            url: url,
-	            line: line
-	        });
-	    }
-
-	    jsbk.Namespace = {
-	        register: function(ns) {
-	            var nsParts = ns.split("."),
-	                root = win,
-	                length,
-	                i;
-	            for (i = 0, length = nsParts.length; i < length; i++) {
-	                if (typeof root[nsParts[i]] == "undefined") {
-	                    root[nsParts[i]] = {};
-	                }
-	                root = root[nsParts[i]];
-	            }
-	            return root;
-	        }
-	    };
 
 	    jsbk.Utils = {
 
@@ -266,21 +225,13 @@
 	            }, false)
 	        }
 	    }
-
-	    String.prototype.temp = function(obj) {
-	        return this.replace(/\$\w+\$/gi, function(matchs) {
-	            var returns = obj[matchs.replace(/\$/g, "")];       
-	            return (returns + "") == "undefined"? "": returns;
-	        });
-	        
-	    }
-
 	    win.JSBK = jsbk;
+	    
 	})(window, document, Zepto);
 
 /***/ },
 
-/***/ 20:
+/***/ 19:
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin

@@ -4,6 +4,14 @@ $(function() {
     require('../../common/layout.js');
     require('../../css/pdiPhone/pdiPhoneTep.css');        
     
+    String.prototype.temp = function(obj) {
+        return this.replace(/\$\w+\$/gi, function(matchs) {
+            var returns = obj[matchs.replace(/\$/g, "")];       
+            return (returns + "") == "undefined"? "": returns;
+        });
+        
+    }
+    
     var productId = JSBK.Utils.GetUrlSearch().ProductId,
         pdLoad = $('.pd-load');
     $.ajax({

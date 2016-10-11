@@ -50,13 +50,14 @@
 	    __webpack_require__(16);
 	    __webpack_require__(5);
 	    /*图片懒加载*/
-	    __webpack_require__(18);
-	    new sq.ui.LazyLoadImg({
+	    var LazyLoadImg = __webpack_require__(25);
+	    new LazyLoadImg({
 	        select: '.imglazyload'
 	    });
 
-	    __webpack_require__(19);
-	    new sq.ui.Swipe($('#swipe_wrap')[0], {
+	    var Swipe = __webpack_require__(18);
+
+	    new Swipe($('#swipe_wrap')[0], {
 	        startSlide: 0,
 	        speed: 0,
 	        auto: 1000,
@@ -121,8 +122,12 @@
 
 	    buildYieldBg();
 
+	    var Confirm = __webpack_require__(26);
+	    var openConfirm = new Confirm();
+
 	    $('#open_btn').on('click', function(e) {
 	        e.preventDefault();
+	        openConfirm.open();
 	        bindButtonClick();
 	    })
 
@@ -225,47 +230,6 @@
 	(function(win, doc, $) {
 
 	    var jsbk = win.JSBK || {};
-
-	    function log(params) {
-	        var key,
-	            arr = [];
-	        if (typeof params === 'string') {
-	            msg = params;
-	        }
-	        if (typeof params === 'object') {
-	            for (key in params) {
-	                if (params.hasOwnProperty(key)) {
-	                    arr.push(key + ':' + encodeURIComponent(JSON.stringify(params[key])));
-	                }
-	            }
-	            msg = arr.join(',');
-	        }
-	        return true;
-	    }
-
-	    win.onerror = function(msg, url, line) {
-	        log({
-	            message: msg,
-	            url: url,
-	            line: line
-	        });
-	    }
-
-	    jsbk.Namespace = {
-	        register: function(ns) {
-	            var nsParts = ns.split("."),
-	                root = win,
-	                length,
-	                i;
-	            for (i = 0, length = nsParts.length; i < length; i++) {
-	                if (typeof root[nsParts[i]] == "undefined") {
-	                    root[nsParts[i]] = {};
-	                }
-	                root = root[nsParts[i]];
-	            }
-	            return root;
-	        }
-	    };
 
 	    jsbk.Utils = {
 
@@ -384,16 +348,8 @@
 	            }, false)
 	        }
 	    }
-
-	    String.prototype.temp = function(obj) {
-	        return this.replace(/\$\w+\$/gi, function(matchs) {
-	            var returns = obj[matchs.replace(/\$/g, "")];       
-	            return (returns + "") == "undefined"? "": returns;
-	        });
-	        
-	    }
-
 	    win.JSBK = jsbk;
+	    
 	})(window, document, Zepto);
 
 /***/ },
@@ -418,110 +374,8 @@
 /***/ function(module, exports) {
 
 	;
-	JSBK.Namespace.register('sq.ui');
-	(function($, w) {
-
-	    w.LazyLoadImg = function(opt) {
-	        var defaults = {
-	            min: 0,
-	            max: -1,
-	            select: 'img',
-	            attr: 'data-src',
-	            ratioAttr: 'origin',
-	            isClip: false,
-	            imgRange: 1
-	        };
-	        this.ops = {};
-	        $.extend(this.ops, defaults, opt);
-	        this.init();
-	    };
-	    w.LazyLoadImg.prototype = {
-	        constructor: w.LazyLoadImg,
-	        init: function() {
-	            var _this = this,
-	                rafStatus = false;
-
-	            // 使用raf代码scoll和touchmove
-	            rAf = window.requestAnimationFrame || window.webkitRequestAnimationFrame || function(callback) {
-	                window.setTimeout(callback, 1000 / 60);
-	            };
-
-	            function imgHander() {
-	                var $window = $(window),
-	                    min = _this.ops.min,
-	                    max = _this.ops.max,
-	                    wheight = $window.height(),
-	                    scrolltop = $window.scrollTop();
-	                if (_this.ops.min < scrolltop) {
-	                    min = scrolltop;
-	                }
-	                if (_this.ops.max === -1 || wheight * _this.ops.imgRange + scrolltop < _this.ops.max) {
-	                    max = wheight * _this.ops.imgRange + scrolltop;
-	                }
-	                _this.refreshImg(min, max);
-	                rafStatus = false;
-	            }
-
-	            function scrollHander() {
-	                if (rafStatus === true) {
-	                    return;
-	                }
-	                rafStatus = true;
-	                rAf(imgHander);
-	            }
-	            $(window).scroll(scrollHander);
-	            $(document).on('touchmove', scrollHander);
-	            // rAf(imgHander);
-	            $(window).trigger('scroll');
-	        },
-	        refreshImg: function(min, max) {
-	            var _this = this,
-	                style,
-	                top;
-	            style = this.ops.select.replace('.', '');
-	            $(this.ops.select).each(function(index, el) {
-	                var $this = $(el);
-	                top = $this.offset().top;
-	                if (top >= min && top <= max) {
-	                    _this.imgReplace($this, _this.ops.attr, _this.ops.ratioAttr, _this.ops.isClip);
-	                    $this.removeClass(style);
-	                }
-	            });
-	        },
-	        imgReplace: function(dom, attr, ratioAttr, isClip) {
-	            var _this = this,
-	                attrName = attr || 'data-src',
-	                url = dom.attr(attrName),
-	                img;
-	            if (!url) {
-	                return;
-	            }
-	            if (url) {
-	                img = new Image();
-	                img.onerror = function() {
-	                    // dom.removeAttr('data-src');
-	                    return false;
-	                };
-	                
-	                img.onload = function() {
-	                    // dom.removeAttr('data-src');
-	                    dom.attr('src', url);
-	                };
-
-	                img.src = url;
-	            }
-	        }
-	    };
-	})(Zepto, sq.ui);
-
-/***/ },
-/* 19 */
-/***/ function(module, exports) {
-
-	;
-	JSBK.Namespace.register('sq.ui');
-	(function($, w) {
-	 w.Swipe = function(container, options) {
+	(function($) {
+	 var Swipe = function(container, options) {
 	    var noop = function() {};
 	    var offloadFn = function(fn) {
 	        setTimeout(fn || noop, 0)
@@ -883,7 +737,366 @@
 	        }
 	    }
 	}
-	})(Zepto, sq.ui);
+
+	module.exports = Swipe;
+
+	})(Zepto);
+
+/***/ },
+/* 19 */,
+/* 20 */,
+/* 21 */,
+/* 22 */,
+/* 23 */,
+/* 24 */,
+/* 25 */
+/***/ function(module, exports) {
+
+	;
+	(function($) {
+
+	    var LazyLoadImg = function(opt) {
+	        var defaults = {
+	            min: 0,
+	            max: -1,
+	            select: 'img',
+	            attr: 'data-src',
+	            ratioAttr: 'origin',
+	            isClip: false,
+	            imgRange: 1
+	        };
+	        this.ops = {};
+	        $.extend(this.ops, defaults, opt);
+	        this.init();
+	    };
+	    LazyLoadImg.prototype = {
+	        constructor: LazyLoadImg,
+	        init: function() {
+	            var _this = this,
+	                rafStatus = false;
+
+	            // 使用raf代码scoll和touchmove
+	            rAf = window.requestAnimationFrame || window.webkitRequestAnimationFrame || function(callback) {
+	                window.setTimeout(callback, 1000 / 60);
+	            };
+
+	            function imgHander() {
+	                var $window = $(window),
+	                    min = _this.ops.min,
+	                    max = _this.ops.max,
+	                    wheight = $window.height(),
+	                    scrolltop = $window.scrollTop();
+	                if (_this.ops.min < scrolltop) {
+	                    min = scrolltop;
+	                }
+	                if (_this.ops.max === -1 || wheight * _this.ops.imgRange + scrolltop < _this.ops.max) {
+	                    max = wheight * _this.ops.imgRange + scrolltop;
+	                }
+	                _this.refreshImg(min, max);
+	                rafStatus = false;
+	            }
+
+	            function scrollHander() {
+	                if (rafStatus === true) {
+	                    return;
+	                }
+	                rafStatus = true;
+	                rAf(imgHander);
+	            }
+	            $(window).scroll(scrollHander);
+	            $(document).on('touchmove', scrollHander);
+	            // rAf(imgHander);
+	            $(window).trigger('scroll');
+	        },
+	        refreshImg: function(min, max) {
+	            var _this = this,
+	                style,
+	                top;
+	            style = this.ops.select.replace('.', '');
+	            $(this.ops.select).each(function(index, el) {
+	                var $this = $(el);
+	                top = $this.offset().top;
+	                if (top >= min && top <= max) {
+	                    _this.imgReplace($this, _this.ops.attr, _this.ops.ratioAttr, _this.ops.isClip);
+	                    $this.removeClass(style);
+	                }
+	            });
+	        },
+	        imgReplace: function(dom, attr, ratioAttr, isClip) {
+	            var _this = this,
+	                attrName = attr || 'data-src',
+	                url = dom.attr(attrName),
+	                img;
+	            if (!url) {
+	                return;
+	            }
+	            if (url) {
+	                img = new Image();
+	                img.onerror = function() {
+	                    // dom.removeAttr('data-src');
+	                    return false;
+	                };
+	                
+	                img.onload = function() {
+	                    // dom.removeAttr('data-src');
+	                    dom.attr('src', url);
+	                };
+
+	                img.src = url;
+	            }
+	        }
+	    };
+
+	    module.exports = LazyLoadImg;
+
+	})(Zepto);
+
+/***/ },
+/* 26 */
+/***/ function(module, exports, __webpack_require__) {
+
+	;
+	(function($) {
+	    var Confirm = function(op) {
+	        var self = this;
+	        var defaults = {
+	            bgClose         : false,
+	            titleHtml       : "确定？",
+	            cancleBtnHtml   : "取消",
+	            confirmBtnHtml  : "确定",
+	            select          : self.getSelect(),
+	            cancleCallback  : null,
+	            confirmCallback : null
+	        };
+	        this.ops = $.extend(defaults, op);
+	        this.dialog = null;
+	        this.init();
+	    }
+
+	    Confirm.prototype.init = function() {
+	        var self = this;
+	        self.setHtml();
+	        __webpack_require__(28);
+	        var Dialog = __webpack_require__(27);
+	        self.dialog = new Dialog( self.ops );
+	        self.bindEvent();
+	    }
+
+	    Confirm.prototype.open = function() {
+	        this.dialog.open();
+	    }
+
+	    Confirm.prototype.bindEvent = function() {
+	        var self = this;
+
+	        // 绑定： 点击“取消”
+	        self.ops.select.on("click", ".cancle-btn", function(e) {
+	            e.stopPropagation();
+	            if( self.ops.cancleCallback ) {
+	                self.ops.cancleCallback(self);
+	            } else {
+	                self.dialog.close();
+	            }
+	        });
+
+	        // 绑定： 点击“确定”
+	        self.ops.select.on("click", ".confirm-btn", function(e) {
+	            e.stopPropagation();
+	            if( self.ops.confirmCallback ) {
+	                self.ops.confirmCallback(self);
+	            } else {
+	                self.dialog.close();
+	            }
+	        });
+	    }
+
+	    Confirm.prototype.setHtml = function() {
+	        var self = this;
+	        self.ops.select.find(".title").html( self.ops.titleHtml );
+	        self.ops.select.find(".cancle-btn").html( self.ops.cancleBtnHtml );
+	        self.ops.select.find(".confirm-btn").html( self.ops.confirmBtnHtml );
+	    }
+
+	    Confirm.prototype.getSelect = function() {
+	        return $('<div class="dialog-mod dialog-confirm">' +
+	                    '<p class="title"></p>' +
+	                    '<div class="btn-wrap">' +
+	                        '<span class="btn cancle-btn"></span>' +
+	                        '<span class="btn confirm-btn"></span>' +
+	                    '</div>' +
+	                '</div>');
+	    }
+
+	    module.exports = Confirm;
+
+	})(Zepto);
+
+
+/***/ },
+/* 27 */
+/***/ function(module, exports) {
+
+	;
+	(function($) {
+
+	    var Observer = {
+	        listener: {
+	            defaults: []
+	        },
+	        on: function(type, fn, context) {
+	            var _type,
+	                _fn;
+	            if (typeof type !== 'string' && typeof type !== 'undefined') {
+	                return;
+	            }
+	            if (typeof fn !== 'function' && typeof context[fn] !== 'function') {
+	                return;
+	            }
+	            _type = type || 'defaults';
+	            _fn = typeof fn === 'function' ? fn : context[fn];
+	            if (typeof this.listener[_type] === 'undefined') {
+	                this.listener[_type] = [];
+	            }
+	            this.listener[_type].push({
+	                fn: _fn,
+	                context: context || this
+	            });
+	        },
+	        off: function(type, fn, context) {
+	            var _type = type || 'defaults',
+	                sub = this.listener[_type],
+	                i,
+	                _context = context || this,
+	                max = sub ? sub.length : 0;
+
+	            for (i = 0; i < max; i++) {
+	                if (sub[i].fn === fn && sub[i].context === _context) {
+	                    sub.splice(i, 1);
+	                }
+	            }
+	        },
+	        trigger: function(type, args) {
+	            var _type = type || 'defaults',
+	                sub = this.listener[_type],
+	                i,
+	                _args,
+	                max = sub ? sub.length : 0;
+	            if (!$.isArray(args)) { // 为了兼容老的代码，这里必须转一下
+	                if (args) {
+	                    _args = [args];
+	                } else {
+	                    _args = [];
+	                }
+	            }
+	            for (i = 0; i < max; i++) {
+	                sub[i].fn.apply(sub[i].context, _args);
+	            }
+	        }
+	    };
+
+	    function addPublisher(o) {
+	        $.extend(true, o, Observer);
+	    }
+
+	    var Dialog = function(opt) {
+	        var defaults = {
+	            className: 'g-d-dialog',
+	            actionEvent: 'click',
+	            bgClose: false,
+	            targetNode: ''
+	        };
+	        this.ops = $.extend(defaults, opt);
+	        this.dom = {};
+	        addPublisher(this);
+	        this.init();
+	    };
+
+	    Dialog.prototype = {
+	        constructor: Dialog,
+	        init: function() {
+	            var frame = $(document.createDocumentFragment()),
+	                _this = this,
+	                content,
+	                div = $('<div></div>');
+	            div.addClass(this.ops.className);
+	            frame.append(div);
+	            if(this.ops.select){
+	                content = $(this.ops.select);
+	            }
+	            div.append(content||'');
+	            $('body').append(frame);
+	            this.dom.dialog = div;
+
+	            // 禁止弹层上面的touchmove
+	            this.dom.dialog.on('touchmove', function(e) {
+	                e.preventDefault();
+	            });
+
+	            // 关闭按钮
+	            $(this.ops.closeSelect).click(function(event) { // 初始化关闭按钮
+	                event.stopPropagation();
+	                _this.trigger('dialogClose');
+	                _this.close();
+	            });
+
+	            // 点击背景关闭
+	            if (this.ops.bgClose) {
+	                div.click(function(event) { // 点击背景关闭
+	                    if (event.target === this) {
+	                        event.stopPropagation();
+	                        _this.trigger('bgClose');
+	                        _this.close();
+	                    }
+	                });
+	            }
+
+	            // 输入框
+	            div.find('input').blur(function(event) {
+	                event.stopPropagation();
+	                _this.fixDrawSlow();
+	            });
+
+	            // 打开弹框
+	            if (this.ops.targetNode) {
+	                $(this.ops.targetNode).on(this.ops.actionEvent, function(event) {
+	                    event.stopPropagation();
+	                    var arr = [].slice.call(arguments);
+	                    _this.open(arr.slice(1));
+	                });
+	            }
+	        },
+	        open: function(arg) {
+	            this.trigger('open', arg);
+	            this.dom.dialog.css('display', '-webkit-box');
+	            this.trigger('afteropen', arg);
+	        },
+	        close: function(arg) {
+	            this.dom.dialog.hide();
+	            this.trigger('close', arg);
+	        },
+	        getDialog: function() {
+	            return this.dom.dialog;
+	        },
+	        fixDrawSlow: function() {
+	            var top = $(window).scrollTop();
+	            setTimeout(function() {
+	                $(window).scrollTop(top + 1);
+	                setTimeout(function() {
+	                    $(window).scrollTop(top);
+	                }, 10);
+	            }, 1);
+	        },
+	    };
+
+	    module.exports = Dialog;
+	})(Zepto);
+
+
+/***/ },
+/* 28 */
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
 
 /***/ }
 /******/ ]);

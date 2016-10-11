@@ -1,6 +1,5 @@
 ;
-JSBK.Namespace.register('sq.ui');
-(function($, C) {
+(function($) {
 
     var Observer = {
         listener: {
@@ -61,7 +60,7 @@ JSBK.Namespace.register('sq.ui');
         $.extend(true, o, Observer);
     }
 
-    C.Dialog = function(opt) {
+    var Dialog = function(opt) {
         var defaults = {
             className: 'g-d-dialog',
             actionEvent: 'click',
@@ -74,8 +73,8 @@ JSBK.Namespace.register('sq.ui');
         this.init();
     };
 
-    C.Dialog.prototype = {
-        constructor: C.Dialog,
+    Dialog.prototype = {
+        constructor: Dialog,
         init: function() {
             var frame = $(document.createDocumentFragment()),
                 _this = this,
@@ -150,4 +149,6 @@ JSBK.Namespace.register('sq.ui');
             }, 1);
         },
     };
-})(Zepto, sq.ui);
+
+    module.exports = Dialog;
+})(Zepto);

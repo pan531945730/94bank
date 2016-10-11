@@ -1,7 +1,6 @@
 ;
-JSBK.Namespace.register('sq.ui');
-(function($, C) {
-    C.Blink = function(op) {
+(function($) {
+    var Blink = function(op) {
         var self = this;
         var defaults = {
             className   : "g-d-dialog blink-mod",
@@ -15,14 +14,15 @@ JSBK.Namespace.register('sq.ui');
         this.init();
     }
 
-    C.Blink.prototype.init = function() {
+    Blink.prototype.init = function() {
         var self = this;
         self.setHtml();
-        require('../ui/Dialog.js');
-        self.dialog = new sq.ui.Dialog( self.ops );
+        require('../ui/Dialog.css');
+        var Dialog = require('../ui/Dialog.js');
+        self.dialog = new Dialog( self.ops );
     }
 
-    C.Blink.prototype.open = function(callback) {
+    Blink.prototype.open = function(callback) {
         var self = this;
         self.dialog.open();
         setTimeout(function() {
@@ -35,23 +35,24 @@ JSBK.Namespace.register('sq.ui');
         }, self.ops.intervaltime);
     }
 
-    C.Blink.prototype.setHtml = function() {
+    Blink.prototype.setHtml = function() {
         var self = this;
         self.ops.select.find(".blink-content").html( self.ops.blinkHtml );
     }
 
-    C.Blink.prototype.setDoc = function(doc) {
+    Blink.prototype.setDoc = function(doc) {
         var self = this;
         self.dialog.dom.dialog.find(".blink-content").empty().append(doc);
     }
 
-    C.Blink.prototype.getSelect = function() {
+    Blink.prototype.getSelect = function() {
         return $('<div class="dialog-mod dialog-blink">' +
                     '<p class="blink-content"></p>' +
                 '</div>');
     }
-
-})(Zepto, sq.ui);
+    
+    module.exports = Blink;
+})(Zepto);
 
 
 

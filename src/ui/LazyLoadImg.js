@@ -1,8 +1,7 @@
 ;
-JSBK.Namespace.register('sq.ui');
-(function($, w) {
+(function($) {
 
-    w.LazyLoadImg = function(opt) {
+    var LazyLoadImg = function(opt) {
         var defaults = {
             min: 0,
             max: -1,
@@ -16,8 +15,8 @@ JSBK.Namespace.register('sq.ui');
         $.extend(this.ops, defaults, opt);
         this.init();
     };
-    w.LazyLoadImg.prototype = {
-        constructor: w.LazyLoadImg,
+    LazyLoadImg.prototype = {
+        constructor: LazyLoadImg,
         init: function() {
             var _this = this,
                 rafStatus = false;
@@ -93,4 +92,7 @@ JSBK.Namespace.register('sq.ui');
             }
         }
     };
-})(Zepto, sq.ui);
+
+    module.exports = LazyLoadImg;
+
+})(Zepto);
