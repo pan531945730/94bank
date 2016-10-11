@@ -1,3 +1,4 @@
+var path = require("path");
 var webpack = require('webpack');
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
 var buildPageConfig = require('./buildPageConfig.js');
@@ -14,7 +15,7 @@ module.exports = {
     entry: pageConfig,
     //入口文件输出配置
     output: {
-        path: 'dist/',
+        path: path.join(__dirname, "./dist"),
         filename: '[name].js'
     },
     watch: true,
@@ -24,15 +25,17 @@ module.exports = {
             test: /\.css$/, 
             loader: ExtractTextPlugin.extract("style-loader","css-loader") },
         {
-            test:/\.(png)|(jpg)$/,
-            loader: "url?limit=50000"
+            test:/\.(png|jpg|eot|woff|ttf|svg)$/,
+            loader: 'url-loader?limit=1'
         }         
      ] 
     },
     resolve: {
-        extensions: ['', '.js', '.jsx', '.css'],
+        root: path.join(__dirname + 'src'),
+        extensions: ['', '.js', '.css'],
         modulesDirectories: [
           'node_modules'
         ]        
-    }
+    },
+    context: path.join(__dirname, 'src')
 };
