@@ -48,7 +48,7 @@
 	;
 	$(function() {
 	    __webpack_require__(1);
-	    __webpack_require__(23);
+	    __webpack_require__(28);
 
 	    var canvas = null,
 	        context = null;
@@ -105,7 +105,7 @@
 
 /***/ },
 
-/***/ 23:
+/***/ 28:
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin

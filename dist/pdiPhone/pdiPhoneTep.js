@@ -49,7 +49,7 @@
 	$(function() {
 	    __webpack_require__(1);
 	    __webpack_require__(5);
-	    __webpack_require__(21);        
+	    __webpack_require__(26);        
 	    
 	    String.prototype.temp = function(obj) {
 	        return this.replace(/\$\w+\$/gi, function(matchs) {
@@ -113,6 +113,31 @@
 	(function(win, doc, $) {
 
 	    var jsbk = win.JSBK || {};
+
+	    function log(params) {
+	        var key,
+	            arr = [];
+	        if (typeof params === 'string') {
+	            msg = params;
+	        }
+	        if (typeof params === 'object') {
+	            for (key in params) {
+	                if (params.hasOwnProperty(key)) {
+	                    arr.push(key + ':' + encodeURIComponent(JSON.stringify(params[key])));
+	                }
+	            }
+	            msg = arr.join(',');
+	        }
+	        return true;
+	    }
+
+	    win.onerror = function(msg, url, line) {
+	        log({
+	            message: msg,
+	            url: url,
+	            line: line
+	        });
+	    }
 
 	    jsbk.Utils = {
 
@@ -231,13 +256,13 @@
 	            }, false)
 	        }
 	    }
-	    win.JSBK = jsbk;
 	    
+	    win.JSBK = jsbk;
 	})(window, document, Zepto);
 
 /***/ },
 
-/***/ 21:
+/***/ 26:
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin

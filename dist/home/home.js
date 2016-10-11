@@ -50,12 +50,12 @@
 	    __webpack_require__(16);
 	    __webpack_require__(5);
 	    /*图片懒加载*/
-	    var LazyLoadImg = __webpack_require__(25);
+	    var LazyLoadImg = __webpack_require__(18);
 	    new LazyLoadImg({
 	        select: '.imglazyload'
 	    });
 
-	    var Swipe = __webpack_require__(18);
+	    var Swipe = __webpack_require__(19);
 
 	    new Swipe($('#swipe_wrap')[0], {
 	        startSlide: 0,
@@ -75,7 +75,7 @@
 	        var content = canvas.getContext('2d'); //取得图形上下文 graphics context 
 
 	        content.fillStyle = '#fff'; //填充canvas的背景颜色 
-	        content.fillRect(0, 0, 320, 160); //参数分别表示 x轴,y轴,宽度,高度 
+	        content.fillRect(0, 0, 320, 160); //参数分别表示 x轴,y/轴,宽度,高度 
 
 	        content.beginPath(); //创建路径 
 	        content.arc(25, 13, 8.5, 0, Math.PI * 2, true); //绘制图形 
@@ -122,7 +122,7 @@
 
 	    buildYieldBg();
 
-	    var Confirm = __webpack_require__(26);
+	    var Confirm = __webpack_require__(20);
 	    var openConfirm = new Confirm();
 
 	    $('#open_btn').on('click', function(e) {
@@ -230,6 +230,31 @@
 	(function(win, doc, $) {
 
 	    var jsbk = win.JSBK || {};
+
+	    function log(params) {
+	        var key,
+	            arr = [];
+	        if (typeof params === 'string') {
+	            msg = params;
+	        }
+	        if (typeof params === 'object') {
+	            for (key in params) {
+	                if (params.hasOwnProperty(key)) {
+	                    arr.push(key + ':' + encodeURIComponent(JSON.stringify(params[key])));
+	                }
+	            }
+	            msg = arr.join(',');
+	        }
+	        return true;
+	    }
+
+	    win.onerror = function(msg, url, line) {
+	        log({
+	            message: msg,
+	            url: url,
+	            line: line
+	        });
+	    }
 
 	    jsbk.Utils = {
 
@@ -348,8 +373,8 @@
 	            }, false)
 	        }
 	    }
-	    win.JSBK = jsbk;
 	    
+	    win.JSBK = jsbk;
 	})(window, document, Zepto);
 
 /***/ },
@@ -371,6 +396,109 @@
 /***/ },
 /* 17 */,
 /* 18 */
+/***/ function(module, exports) {
+
+	;
+	(function($) {
+
+	    var LazyLoadImg = function(opt) {
+	        var defaults = {
+	            min: 0,
+	            max: -1,
+	            select: 'img',
+	            attr: 'data-src',
+	            ratioAttr: 'origin',
+	            isClip: false,
+	            imgRange: 1
+	        };
+	        this.ops = {};
+	        $.extend(this.ops, defaults, opt);
+	        this.init();
+	    };
+	    LazyLoadImg.prototype = {
+	        constructor: LazyLoadImg,
+	        init: function() {
+	            var _this = this,
+	                rafStatus = false;
+
+	            // 使用raf代码scoll和touchmove
+	            rAf = window.requestAnimationFrame || window.webkitRequestAnimationFrame || function(callback) {
+	                window.setTimeout(callback, 1000 / 60);
+	            };
+
+	            function imgHander() {
+	                var $window = $(window),
+	                    min = _this.ops.min,
+	                    max = _this.ops.max,
+	                    wheight = $window.height(),
+	                    scrolltop = $window.scrollTop();
+	                if (_this.ops.min < scrolltop) {
+	                    min = scrolltop;
+	                }
+	                if (_this.ops.max === -1 || wheight * _this.ops.imgRange + scrolltop < _this.ops.max) {
+	                    max = wheight * _this.ops.imgRange + scrolltop;
+	                }
+	                _this.refreshImg(min, max);
+	                rafStatus = false;
+	            }
+
+	            function scrollHander() {
+	                if (rafStatus === true) {
+	                    return;
+	                }
+	                rafStatus = true;
+	                rAf(imgHander);
+	            }
+	            $(window).scroll(scrollHander);
+	            $(document).on('touchmove', scrollHander);
+	            // rAf(imgHander);
+	            $(window).trigger('scroll');
+	        },
+	        refreshImg: function(min, max) {
+	            var _this = this,
+	                style,
+	                top;
+	            style = this.ops.select.replace('.', '');
+	            $(this.ops.select).each(function(index, el) {
+	                var $this = $(el);
+	                top = $this.offset().top;
+	                if (top >= min && top <= max) {
+	                    _this.imgReplace($this, _this.ops.attr, _this.ops.ratioAttr, _this.ops.isClip);
+	                    $this.removeClass(style);
+	                }
+	            });
+	        },
+	        imgReplace: function(dom, attr, ratioAttr, isClip) {
+	            var _this = this,
+	                attrName = attr || 'data-src',
+	                url = dom.attr(attrName),
+	                img;
+	            if (!url) {
+	                return;
+	            }
+	            if (url) {
+	                img = new Image();
+	                img.onerror = function() {
+	                    // dom.removeAttr('data-src');
+	                    return false;
+	                };
+	                
+	                img.onload = function() {
+	                    // dom.removeAttr('data-src');
+	                    dom.attr('src', url);
+	                };
+
+	                img.src = url;
+	            }
+	        }
+	    };
+
+	    module.exports = LazyLoadImg;
+
+	})(Zepto);
+
+/***/ },
+/* 19 */
 /***/ function(module, exports) {
 
 	;
@@ -743,116 +871,7 @@
 	})(Zepto);
 
 /***/ },
-/* 19 */,
-/* 20 */,
-/* 21 */,
-/* 22 */,
-/* 23 */,
-/* 24 */,
-/* 25 */
-/***/ function(module, exports) {
-
-	;
-	(function($) {
-
-	    var LazyLoadImg = function(opt) {
-	        var defaults = {
-	            min: 0,
-	            max: -1,
-	            select: 'img',
-	            attr: 'data-src',
-	            ratioAttr: 'origin',
-	            isClip: false,
-	            imgRange: 1
-	        };
-	        this.ops = {};
-	        $.extend(this.ops, defaults, opt);
-	        this.init();
-	    };
-	    LazyLoadImg.prototype = {
-	        constructor: LazyLoadImg,
-	        init: function() {
-	            var _this = this,
-	                rafStatus = false;
-
-	            // 使用raf代码scoll和touchmove
-	            rAf = window.requestAnimationFrame || window.webkitRequestAnimationFrame || function(callback) {
-	                window.setTimeout(callback, 1000 / 60);
-	            };
-
-	            function imgHander() {
-	                var $window = $(window),
-	                    min = _this.ops.min,
-	                    max = _this.ops.max,
-	                    wheight = $window.height(),
-	                    scrolltop = $window.scrollTop();
-	                if (_this.ops.min < scrolltop) {
-	                    min = scrolltop;
-	                }
-	                if (_this.ops.max === -1 || wheight * _this.ops.imgRange + scrolltop < _this.ops.max) {
-	                    max = wheight * _this.ops.imgRange + scrolltop;
-	                }
-	                _this.refreshImg(min, max);
-	                rafStatus = false;
-	            }
-
-	            function scrollHander() {
-	                if (rafStatus === true) {
-	                    return;
-	                }
-	                rafStatus = true;
-	                rAf(imgHander);
-	            }
-	            $(window).scroll(scrollHander);
-	            $(document).on('touchmove', scrollHander);
-	            // rAf(imgHander);
-	            $(window).trigger('scroll');
-	        },
-	        refreshImg: function(min, max) {
-	            var _this = this,
-	                style,
-	                top;
-	            style = this.ops.select.replace('.', '');
-	            $(this.ops.select).each(function(index, el) {
-	                var $this = $(el);
-	                top = $this.offset().top;
-	                if (top >= min && top <= max) {
-	                    _this.imgReplace($this, _this.ops.attr, _this.ops.ratioAttr, _this.ops.isClip);
-	                    $this.removeClass(style);
-	                }
-	            });
-	        },
-	        imgReplace: function(dom, attr, ratioAttr, isClip) {
-	            var _this = this,
-	                attrName = attr || 'data-src',
-	                url = dom.attr(attrName),
-	                img;
-	            if (!url) {
-	                return;
-	            }
-	            if (url) {
-	                img = new Image();
-	                img.onerror = function() {
-	                    // dom.removeAttr('data-src');
-	                    return false;
-	                };
-	                
-	                img.onload = function() {
-	                    // dom.removeAttr('data-src');
-	                    dom.attr('src', url);
-	                };
-
-	                img.src = url;
-	            }
-	        }
-	    };
-
-	    module.exports = LazyLoadImg;
-
-	})(Zepto);
-
-/***/ },
-/* 26 */
+/* 20 */
 /***/ function(module, exports, __webpack_require__) {
 
 	;
@@ -876,8 +895,8 @@
 	    Confirm.prototype.init = function() {
 	        var self = this;
 	        self.setHtml();
-	        __webpack_require__(28);
-	        var Dialog = __webpack_require__(27);
+	        __webpack_require__(21);
+	        var Dialog = __webpack_require__(23);
 	        self.dialog = new Dialog( self.ops );
 	        self.bindEvent();
 	    }
@@ -933,7 +952,14 @@
 
 
 /***/ },
-/* 27 */
+/* 21 */
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
+
+/***/ },
+/* 22 */,
+/* 23 */
 /***/ function(module, exports) {
 
 	;
@@ -1091,12 +1117,6 @@
 	    module.exports = Dialog;
 	})(Zepto);
 
-
-/***/ },
-/* 28 */
-/***/ function(module, exports) {
-
-	// removed by extract-text-webpack-plugin
 
 /***/ }
 /******/ ]);

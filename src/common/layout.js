@@ -3,6 +3,31 @@
 
     var jsbk = win.JSBK || {};
 
+    function log(params) {
+        var key,
+            arr = [];
+        if (typeof params === 'string') {
+            msg = params;
+        }
+        if (typeof params === 'object') {
+            for (key in params) {
+                if (params.hasOwnProperty(key)) {
+                    arr.push(key + ':' + encodeURIComponent(JSON.stringify(params[key])));
+                }
+            }
+            msg = arr.join(',');
+        }
+        return true;
+    }
+
+    win.onerror = function(msg, url, line) {
+        log({
+            message: msg,
+            url: url,
+            line: line
+        });
+    }
+
     jsbk.Utils = {
 
         // http://techpatterns.com/downloads/javascript_cookies.php
@@ -120,6 +145,6 @@
             }, false)
         }
     }
-    win.JSBK = jsbk;
     
+    win.JSBK = jsbk;
 })(window, document, Zepto);

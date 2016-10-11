@@ -29,7 +29,7 @@ $(function() {
         var content = canvas.getContext('2d'); //取得图形上下文 graphics context 
 
         content.fillStyle = '#fff'; //填充canvas的背景颜色 
-        content.fillRect(0, 0, 320, 160); //参数分别表示 x轴,y轴,宽度,高度 
+        content.fillRect(0, 0, 320, 160); //参数分别表示 x轴,y/轴,宽度,高度 
 
         content.beginPath(); //创建路径 
         content.arc(25, 13, 8.5, 0, Math.PI * 2, true); //绘制图形 
