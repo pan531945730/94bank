@@ -1,65 +1,6 @@
 ;
 (function($) {
-
-    var Observer = {
-        listener: {
-            defaults: []
-        },
-        on: function(type, fn, context) {
-            var _type,
-                _fn;
-            if (typeof type !== 'string' && typeof type !== 'undefined') {
-                return;
-            }
-            if (typeof fn !== 'function' && typeof context[fn] !== 'function') {
-                return;
-            }
-            _type = type || 'defaults';
-            _fn = typeof fn === 'function' ? fn : context[fn];
-            if (typeof this.listener[_type] === 'undefined') {
-                this.listener[_type] = [];
-            }
-            this.listener[_type].push({
-                fn: _fn,
-                context: context || this
-            });
-        },
-        off: function(type, fn, context) {
-            var _type = type || 'defaults',
-                sub = this.listener[_type],
-                i,
-                _context = context || this,
-                max = sub ? sub.length : 0;
-
-            for (i = 0; i < max; i++) {
-                if (sub[i].fn === fn && sub[i].context === _context) {
-                    sub.splice(i, 1);
-                }
-            }
-        },
-        trigger: function(type, args) {
-            var _type = type || 'defaults',
-                sub = this.listener[_type],
-                i,
-                _args,
-                max = sub ? sub.length : 0;
-            if (!$.isArray(args)) { // 为了兼容老的代码，这里必须转一下
-                if (args) {
-                    _args = [args];
-                } else {
-                    _args = [];
-                }
-            }
-            for (i = 0; i < max; i++) {
-                sub[i].fn.apply(sub[i].context, _args);
-            }
-        }
-    };
-
-    function addPublisher(o) {
-        $.extend(true, o, Observer);
-    }
-
+    var Observer = require('../ui/Observer.js');
     var Dialog = function(opt) {
         var defaults = {
             className: 'g-d-dialog',
@@ -69,7 +10,7 @@
         };
         this.ops = $.extend(defaults, opt);
         this.dom = {};
-        addPublisher(this);
+        Observer.addPublisher(this);
         this.init();
     };
 

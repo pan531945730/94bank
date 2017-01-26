@@ -4,7 +4,8 @@
         var self = this;
         var defaults = {
             bgClose         : false,
-            titleHtml       : "确定？",
+            titleHtml       : "标题",
+            infoHtml        : null,
             cancleBtnHtml   : "取消",
             confirmBtnHtml  : "确定",
             select          : self.getSelect(),
@@ -56,6 +57,7 @@
     Confirm.prototype.setHtml = function() {
         var self = this;
         self.ops.select.find(".title").html( self.ops.titleHtml );
+        self.ops.select.find(".info").html( self.ops.infoHtml );
         self.ops.select.find(".cancle-btn").html( self.ops.cancleBtnHtml );
         self.ops.select.find(".confirm-btn").html( self.ops.confirmBtnHtml );
     }
@@ -63,6 +65,7 @@
     Confirm.prototype.getSelect = function() {
         return $('<div class="dialog-mod dialog-confirm">' +
                     '<p class="title"></p>' +
+                    '<div class="info"></div>'+
                     '<div class="btn-wrap">' +
                         '<span class="btn cancle-btn"></span>' +
                         '<span class="btn confirm-btn"></span>' +

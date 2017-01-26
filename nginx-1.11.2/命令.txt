@@ -1,0 +1,7 @@
+nginx -s stop – 快速的停止Nginx
+
+nginx -s quit –  优雅的停止Nginx
+
+nginx -s reload – 重载配置文件
+
+nginx -s reopen – 重新打开日志

@@ -3,31 +3,6 @@
 
     var jsbk = win.JSBK || {};
 
-    function log(params) {
-        var key,
-            arr = [];
-        if (typeof params === 'string') {
-            msg = params;
-        }
-        if (typeof params === 'object') {
-            for (key in params) {
-                if (params.hasOwnProperty(key)) {
-                    arr.push(key + ':' + encodeURIComponent(JSON.stringify(params[key])));
-                }
-            }
-            msg = arr.join(',');
-        }
-        return true;
-    }
-
-    win.onerror = function(msg, url, line) {
-        log({
-            message: msg,
-            url: url,
-            line: line
-        });
-    }
-
     jsbk.Utils = {
 
         // http://techpatterns.com/downloads/javascript_cookies.php
@@ -113,37 +88,267 @@
             }
         },
 
-        //获取url中"?"符后的字串 
-        GetUrlSearch: function() {
+        //获取url中"returl"符后的字串 
+        GetUrlSearch: function(returl) {
             var url = location.search; 
-            var theRequest = new Object();
-            if (url.indexOf("?") != -1) {
-                var str = url.substr(1);
-                strs = str.split("&");
-                for (var i = 0; i < strs.length; i++) {
-                    theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
-                }
+            var strs = url.split(returl);
+            if(strs.length>1){
+                return strs[1];
+            }else{
+                return '';
             }
-            return theRequest;
+        },
+		
+		GetQueryString: function(name) {//获取指定name的url参数
+			 var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+			 var r = window.location.search.substr(1).match(reg);
+			 if(r!=null)return  unescape(r[2]); return null;
+		},
+
+        connectWebViewJavascriptBridge: function (callback) {
+            if (window.WebViewJavascriptBridge) {
+                callback(WebViewJavascriptBridge)
+            } else {
+                window.WVJBCallbacks = [callback];
+                var WVJBIframe = document.createElement('iframe');
+                WVJBIframe.style.display = 'none';
+                WVJBIframe.src = 'wvjbscheme://__BRIDGE_LOADED__';
+                document.documentElement.appendChild(WVJBIframe);
+                setTimeout(function () {
+                    document.documentElement.removeChild(WVJBIframe)
+                }, 0)
+                document.addEventListener('WebViewJavascriptBridgeReady', function () {
+                    callback(WebViewJavascriptBridge)
+                }, false)
+            }
+        },
+        
+        postAjax : function(d){
+            $.ajax({
+                type: 'post',
+                dataType: 'json',
+                url: d.url || window.Zepto.setUrl+'/api/Ajax',
+                data: { D: JSON.stringify(d.data), M: d.mFun },
+                beforeSend: function(){
+                   d.beforeFun && d.beforeFun();
+                },
+                //请求成功时执行
+                success: function(v) {
+                    
+                    if(v.S === 0){
+                        // 正常处理
+                        var dd = $.parseJSON(v.D);
+                        d.sucFun && d.sucFun(dd);
+                    }else if(v.S === 101){
+                        // 登录超时
+                        if(d.mFun == 'GetMemberAccount'){
+                            // 异常处理
+                            d.unusualFun && d.unusualFun(v);
+                        }else{
+                            var Alert = require('../ui/Alert.js');
+                            var overTime = new Alert({
+                                titleHtml : v.ES,
+                                clickBtnCallback : function(){
+                                    location.href = window.Zepto.setUrl+"/member/login?returl="+location.href;
+                                }
+                            });
+                            overTime.open();
+                        }
+                    }else{
+                        // 异常处理
+                        d.unusualFun && d.unusualFun(v);
+                    }
+                },
+				complete: d.comFun,
+                //请求失败遇到异常触发
+                error: function() {
+                    d.errFun && d.errFun();
+                } 
+            });
         }
+
     };
 
-    jsbk.connectWebViewJavascriptBridge = function(callback) {
-        if (window.WebViewJavascriptBridge) {
-            callback(WebViewJavascriptBridge)
-        } else {
-            window.WVJBCallbacks = [callback];
-            var WVJBIframe = document.createElement('iframe');
-            WVJBIframe.style.display = 'none';
-            WVJBIframe.src = 'wvjbscheme://__BRIDGE_LOADED__';
-            document.documentElement.appendChild(WVJBIframe);
-            setTimeout(function() {
-                document.documentElement.removeChild(WVJBIframe)
-            }, 0)
-            document.addEventListener('WebViewJavascriptBridgeReady', function() {
-                callback(WebViewJavascriptBridge)
-            }, false)
+    //H5处理逻辑
+    win.getUserSuc = function (callback) {
+        callback('user-h5');
+    }
+
+    win.getHongbao = function(callback){
+        callback('hongbao');
+    }
+
+    win.getDetail = function(callback){
+        callback('detail');
+    }
+
+    var detailData = {
+        'jijinbao' : {
+            'id': 2011,
+            'appTemplateType': 2
+        },
+        'yinhangbao' : {
+            'id' : 41,
+            'appTemplateType' : 4
+        },
+        'yangguangsimu' : {
+            'id' : 2301,
+            'appTemplateType' : 6
         }
+    }
+    //console.log(detailData.yinhangbao);
+    //app处理逻辑
+    jsbk.Utils.connectWebViewJavascriptBridge(function (bridge) {
+
+        bridge.init(function (message, responseCallback) {
+            /*alert('JS got a message', message)
+            var data = { 'Javascript Responds':'Wee!' }
+            alert('JS responding with', data)
+            responseCallback(data)*/
+        })
+
+        win.getUserSuc = function (callback) {
+            bridge.callHandler('com.hongzhe.bank94.getToken', null, function (response) {
+                callback(response);
+            })
+        };
+
+        window.getHongbao = function(callback) {
+            bridge.callHandler('com.hongzhe.bank94.requestCheckTickets', null, function(response) {
+                callback(response);
+            })
+        };
+
+        window.getDetail = function(callback) {
+            bridge.callHandler('com.hongzhe.bank94.requestProductDetail', detailData.yinhangbao, function(response) {
+                callback(response);
+            })
+        };
+
+    })
+
+    jsbk.isToken = true;
+    jsbk.bindToken = function (sucFun,unusualFun) {
+        
+        getUserSuc(function (token) {
+            if (token == 'user-h5') {
+                sucFun && sucFun();
+            }else{
+                //获取token后所做的逻辑
+                var tokenData = {
+                    data: {
+                        'ToKen': token
+                    },
+                    mFun: 'SetToken',
+                    beforeFun : function(){
+                    },
+                    sucFun : function(v){
+                        sucFun && sucFun();
+                        jsbk.isToken = false;
+                    },
+                    unusualFun : function(v){
+                        unusualFun && unusualFun();
+                    }
+                }        
+        
+                if(jsbk.isToken){
+                    jsbk.Utils.postAjax(tokenData);
+                }else{
+                    sucFun && sucFun();
+                }
+            }
+        });
+    }
+
+    jsbk.bindHongbao = function(){
+        getHongbao(function(v){
+            $('#get_hongbao').html(v);
+        })
+    }
+
+    jsbk.bindDetail = function(){
+        getDetail(function(v){
+            $('#get_detail').html(v);
+        })
+    }
+
+    //微信配置接口
+    var wxFlag;
+    var wxAjax = function(ops){
+        $.ajax({
+            url: "/Other/GetWeChatShareJs",
+            type: "get",
+            data: { "url": window.location.href },
+            dataType: "json",
+            success: function (jdata) {
+                if (jdata != '' && jdata != null) {
+                    wx.config({
+                        debug: false,
+                        appId: jdata.AppId,
+                        timestamp: jdata.TimeStamp,
+                        nonceStr: jdata.NonceStr,
+                        signature: jdata.Signature,
+                        jsApiList: [
+                            'onMenuShareTimeline',
+                            'onMenuShareAppMessage',
+                            'onMenuShareQQ',
+                            'onMenuShareWeibo',
+                            'hideMenuItems',
+                            'showMenuItems',
+                            'chooseImage',
+                            'previewImage',
+                            'uploadImage',
+                            'downloadImage',
+                            'getNetworkType',
+                            'openLocation',
+                            'getLocation',
+                            'hideOptionMenu',
+                            'showOptionMenu',
+                            'scanQRCode'
+                        ]
+                    });
+                }
+            },
+            error : function(){
+                console.log('weixin error');
+            }
+        });
+        wx.ready(function () {
+            var shareData = {
+                title: ops.title,
+                desc: ops.desc,
+                link: ops.link,
+                imgUrl: ops.imgUrl,
+                trigger: function (res) {
+                },
+                success: function (res) {
+                },
+                cancel: function (res) {
+                },
+                fail: function (res) {
+                    alert(JSON.stringify(res));
+                }
+            };
+            wx.onMenuShareAppMessage(shareData);
+            wx.onMenuShareTimeline(shareData);
+        });
+    }
+    jsbk.shareWinxin = function(ops){
+        //微信js库引用
+        var s = document.createElement('script');
+        s.type = 'text/javascript';
+        s.async = true;
+        s.src = 'http://res.wx.qq.com/open/js/jweixin-1.0.0.js?v=E8EB1875417F4E398111-90AFF3378C30';
+        var b = document.body;
+        s.onload = function(){
+            wxAjax(ops);
+        }
+        if(!wxFlag){
+            b.appendChild(s);
+            wxFlag = true;
+        }else{
+            wxAjax(ops);
+        }            
     }
     
     win.JSBK = jsbk;

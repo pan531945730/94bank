@@ -1,0 +1,127 @@
+html {
+    font-size: 62.5%;
+}
+body {
+    font-family: "Helvetica Neue", Helvetica, Arial, "Microsoft Yahei", SimSun, sans-serif;
+    color: #333;
+    font-size: 12px;
+    min-width: 320px;
+}
+ul,ol {
+    list-style: none;
+}
+i,em,var,tt{
+    font-style: normal;
+}
+article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
+    display: block;
+}
+body,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,p,form,input,textarea,article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary,button{
+    margin: 0;
+    padding: 0;
+}
+img{
+   display: block;
+   border: 0;
+}
+h1,h2,h3,h4,h5,h6 {
+  font-weight: normal;
+}
+input, img {
+    vertical-align:middle;
+}
+a:link,a:visited{
+    text-decoration: none;
+}
+/*元素被点击的时候产生的背景颜色（各个浏览器有默认颜色）*/
+a, li, input, button, section, span, div {
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    tap-highlight-color: rgba(0,0,0,0);
+}
+/* 去除webkit浏览器对input默认样式*/
+input,textarea {
+    -webkit-appearance:none;
+    outline: 0;
+}
+button{
+    border:0;
+    outline: none;
+}html{
+    background-color: #fbf9d8;
+}
+.lf-cont{
+    padding: 10px 15px 0;
+}
+.lf-cont li{
+    display: -webkit-box;
+    margin-top: 17px;
+    height: 76px;
+    padding: 14px 0 20px 0;
+    line-height: 20px;
+    border-radius: 10px;
+    background-color: #fff;
+}
+.lf-main{
+    width: 110px;
+    text-align: center;
+    border-right: 1px dashed #e5e5e5;
+}
+.lf-main img{
+    display: inline-block;
+}
+.lf-cont li:nth-of-type(2) img{
+    margin-top: 10px;
+}
+.lf-main p{
+    padding-top: 5px;
+    font-weight: bold;
+    color: #999;
+}
+.lf-info{
+    -webkit-box-flex:1;
+    padding-left: 20px;
+}
+.lf-info h2{
+    padding: 9px 0 6px;
+    font-weight: bold;
+    font-size: 1.7rem;
+}
+.lf-info p{
+    color: #575757;
+}
+.lf-c{
+    padding: 0 2px;
+    color: #ff5959;
+}
+.lf-c em{
+    font-size: 1.8rem;
+}
+.if-btn {
+    display: block;
+    line-height: 45px;
+    border-radius: 5px;
+    margin: 14px 15px;
+    border:none;
+    color: #fff;
+    text-align: center;
+    font-size: 1.6rem;
+    background-color: #ff5959;
+}
+.reg_suc{
+    position: absolute;
+    left: 50px;
+    right: 22px;
+    top: 8px;
+}
+.g-d-dialog{
+    display: none;
+    z-index: 100;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    -webkit-box-align: center;
+    -webkit-box-pack: center;
+    background: rgba(0,0,0,.75);
+}
